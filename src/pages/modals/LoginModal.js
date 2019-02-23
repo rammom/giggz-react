@@ -14,9 +14,16 @@ function LoginModal(props) {
 			<Modal.Body>
 				<LoginForm login={props.login} error={props.error} />
 			</Modal.Body>
-		</Modal>
 
+			<Modal.Footer style={FooterStyle}>
+				Need an account? &nbsp; <span className="redLink" onClick={props.register}>Sign up </span>
+			</Modal.Footer>
+		</Modal>
 	)
+}
+
+const FooterStyle = {
+	margin: "auto"
 }
 
 

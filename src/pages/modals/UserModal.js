@@ -9,7 +9,7 @@ function UserModal(props) {
 			<Modal.Body style={BodyStyles}>
 				<img
 					style={ProfileImageStyle}
-					src="https://s3.us-east-2.amazonaws.com/giggs/default_pp.jpg"
+					src={user.image}
 					alt="profile"
 				/>
 				<h1>{user.firstname} {user.lastname}</h1>

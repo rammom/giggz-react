@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 
 import ErrorFlash from './ErrorFlash';
+import MyButton from './MyButton';
 
 export class LoginForm extends Component {
 
@@ -40,9 +40,7 @@ export class LoginForm extends Component {
 						<Form.Control type="password" name="password" value={this.state.user.password} placeholder="Password" onChange={this.onChange} />
 					</Form.Group>
 
-					<Button variant="primary" type="submit">
-						Login
-  					</Button>
+					<MyButton variant="primary" type="submit" text="Login" />
 
 				</Form>
 			</div>

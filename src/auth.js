@@ -2,6 +2,17 @@ import axios from 'axios';
 
 class Auth {
 
+	async register(body, success, fail) {
+		console.log("registering...");
+		await axios.post('/auth/register', body)
+			.then(res => {
+				return success(res);
+			})
+			.catch(err => {
+				return fail(err.response.data);
+			})
+	}
+
 	async login(body, success, fail) {
 		console.log("logging in...");
 		await axios.post('/auth/login', body)
@@ -36,8 +47,8 @@ class Auth {
 	}
 
 
-	isAuthenticated() { 
-		return sessionStorage.getItem('user') !== "null"; 
+	isAuthenticated() {
+		return sessionStorage.getItem('user') !== null && sessionStorage.getItem('user') !== "null"; 
 	}
 }
 

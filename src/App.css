@@ -1,3 +1,13 @@
 body {
 	background-color: #f8f8ff;
+	font-family: 'Poppins', sans-serif;
+}
+
+.bgColRed {
+	background-color: "#dd0000!important"
+}
+
+.redLink {
+	cursor: pointer;
+	color: #dd0000;
 }
