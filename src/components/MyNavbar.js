@@ -159,7 +159,8 @@ const nav_text_color = "#f8f8ff";
 
 const NavbarBrandStyle = {
 	color: nav_text_color,
-	fontSize: "22px"
+	fontSize: "22px",
+	cursor: "pointer"
 }
 
 const NavbarLinkStyle = {

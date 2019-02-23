@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 function MyButton({text, ...props}) {
 	return (
-		<Button {...props} style={ButtonStyles}>
+		<Button {...props} variant="dark" style={ButtonStyles}>
 			{text}
 		</Button>
 	)
@@ -11,7 +11,7 @@ function MyButton({text, ...props}) {
 
 const ButtonStyles = {
 	backgroundColor: "#dd0000",
-	borderColor: "#dd0000"
+	borderColor: "#dd0000",
 }
 
 export default MyButton;
