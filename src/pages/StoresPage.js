@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import MyNavbar from '../components/MyNavbar';
-import { Card, ListGroup, ListGroupItem, ProgressBar, Row, Col } from 'react-bootstrap';
+import { Card, CardDeck, ListGroup, ListGroupItem, ProgressBar, Row, Col } from 'react-bootstrap';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
 
@@ -26,12 +26,25 @@ export class StorePage extends Component {
 			})
 	}
 
+	gen_card_deck = (cards) => {
+		return (
+			<CardDeck style={{marginBottom: "1em"}}>
+				{cards}
+			</CardDeck>
+		)
+	}
+
 	gen_cards = () => {
 		let cards = [];
-		this.state.stores.forEach((store) => {
-			cards.push(this.gen_card(store));
-		});
-		return cards;
+		let cardDecks = [];
+		for (let i =0; i < this.state.stores.length; i+=3){
+			cards.push(this.gen_card(this.state.stores[i]));
+			if (i+1 < this.state.stores.length) cards.push(this.gen_card(this.state.stores[i+1]));
+			if (i+2 < this.state.stores.length) cards.push(this.gen_card(this.state.stores[i+2]));
+			cardDecks.push(this.gen_card_deck(cards));
+			cards = []
+		}
+		return cardDecks;
 	}
 
 	gen_card = (store) => {
@@ -47,21 +60,22 @@ export class StorePage extends Component {
 			<Card style={{ width: '18rem' }}>
 				{/* <Card.Img variant="top" src="#" /> */}
 
-				<Card.Body>
-					<Card.Title>{store.name}</Card.Title>
-					<Card.Text>
-						{store.description}
-					</Card.Text>
+				<Card.Body style={{padding: "0"}}>
+					<div style={{padding: "1em"}}>
+						<Card.Title style={{ textAlign: "center", paddingTop: "1em", height: "6em", overflow: 'scroll' }}><h3>{store.name}</h3></Card.Title>
+						<Card.Text style={{height: "10em", overflow: 'scroll'}}>
+							{store.description}
+						</Card.Text>
+					</div>
+					<Card.Header>Employees</Card.Header>
+					<ListGroup className="list-group-flush">
+						{employees}
+					</ListGroup>
 				</Card.Body>
 
-				<Card.Header>Employees</Card.Header>
-				<ListGroup className="list-group-flush">
-					{employees}
-				</ListGroup>
 
-				<Card.Body>
-					<MyButton text="Book Your Gigg" onClick={() => { this.props.history.push(`/store/${store.slug}`, {store}) }} />
-				</Card.Body>
+				
+				<MyButton text="Book Your Gigg" onClick={() => { this.props.history.push(`/store/${store.slug}`, {store}) }} />
 
 			</Card>
 		)
@@ -84,7 +98,9 @@ export class StorePage extends Component {
 					<h1>Your next Gigg is just a couple more clicks away.</h1>
 					<h5>Checkout some stores in your area.</h5>
 					<hr/>
-					{this.gen_cards(this.state.stores)}
+					<CardDeck>
+						{this.gen_cards(this.state.stores)}
+					</CardDeck>
 				</MyContainer>
 			</div>
 		)
