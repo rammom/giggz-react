@@ -1,0 +1,40 @@
+.timeText {
+	padding-left: 0.5em;
+	font-size: 0.8em;
+}
+
+.greyed {
+	background-color: #444444aa;
+}
+
+.textCenter {
+	text-align: center;
+}
+
+.topBorder {
+	border-top: 1px solid #000000aa;
+}
+.bottomBorder {
+	border-bottom: 1px solid #000000aa;
+}
+
+.noPadding {
+	padding: 0;
+}
+.noPaddingRight {
+	padding-right: 0;
+}
+.noPaddingLeft {
+	padding-left: 0;
+}
+
+.noMargin {
+	margin: 0;
+}
+
+.hourSlot {
+	height: 8rem;
+}
+.quarterSlot {
+	height: 25%;
+}
