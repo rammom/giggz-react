@@ -4,7 +4,11 @@ import { Card, CardDeck, ListGroup, ListGroupItem, Row, Col, ProgressBar } from 
 import MyNavbar from '../components/MyNavbar';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
+import GoogleMap from '../components/GoogleMap';
 import axios from 'axios';
+
+
+
 
 let click_distance = 4;
 let progress = `${(100/5)*(6-click_distance)}`
@@ -12,7 +16,15 @@ let progress = `${(100/5)*(6-click_distance)}`
 export class StorePage extends Component {
 
 	state = {
-		store: {}
+		store: {
+			name: '',
+			address: {
+				street: '',
+				city: '',
+				state: '',
+				country: '',
+			}
+		}
 	}
 
 	async componentWillMount() {
@@ -96,10 +108,18 @@ export class StorePage extends Component {
 					<br/>
 					<h1>Treat Yourself With The Very Best.</h1>
 					<h5>Choose from a selection of <b style={{color: "#dd0000"}}>{this.state.store.name}</b>'s professional employees and services.</h5>
+					<div>
+						<GoogleMap 
+							address={this.state.store.address}
+							zoom={12}
+						/>
+					</div>
 					<hr/>
 					<CardDeck>
 						{this.gen_employee_cards()}
 					</CardDeck>
+					<br/>
+					
 				</MyContainer>
 			</div>
 		)

@@ -28,11 +28,7 @@ export class LandingPage extends Component {
 	}
 }
 
-const images = [
-	"https://qtxasset.com/files/americansalon/field/image/bb-1215-Role-DSC0643-rev_C2101_R75530.jpg?qkpAjMRo6y7SlEBjkhVFsmz.mJurMhyo",
-	"https://static.thatsup.co/content/img/place/m/a/man-stockholm-barbershop-3.jpg",
-	"https://downtownlincoln.org/_files/images/roots1.jpeg"
-]
+const background_image = "https://downtownlincoln.org/_files/images/roots1.jpeg"
 
 
 
@@ -48,7 +44,7 @@ const PageOneStyles = {
 	width: "100vw",
 	margin: "0",
 	border: "2px solid black",
-	backgroundImage: "url(" + images[Math.floor(Math.random() * images.length)]+")",
+	backgroundImage: "url(" + background_image +")",
 	backgroundRepeat: "no-repeat",
 	backgroundSize: "cover",
 	backgroundPosition: "center",
