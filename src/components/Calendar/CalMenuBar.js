@@ -15,25 +15,25 @@ export class CalMenuBar extends Component {
 				<Row>
 					<Col xs={1} className="noMargin"></Col>
 					<Col className="noMargin textCenter">
-						<span>{days[this.props.date.getDay() % 7]}</span>
+						<span>{days[this.props.date.getDay() % 7]} &nbsp; {this.props.date.getDate()}</span>
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+1)  % 7]}</span>
+						<span>{days[(this.props.date.getDay() + 1) % 7]} &nbsp; {this.props.date.getDate() + 1}</span>
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+2) % 7]}</span>
+						<span>{days[(this.props.date.getDay() + 2) % 7]} &nbsp; {this.props.date.getDate() + 2}</span>
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+3) % 7]}</span>
+						<span>{days[(this.props.date.getDay() + 3) % 7]} &nbsp; {this.props.date.getDate() + 3}</span>
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+4) % 7]}</span> 
+						<span>{days[(this.props.date.getDay() + 4) % 7]} &nbsp; {this.props.date.getDate() + 4}</span> 
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+5) % 7]}</span>
+						<span>{days[(this.props.date.getDay() + 5) % 7]} &nbsp; {this.props.date.getDate() + 5}</span>
 					</Col>
 					<Col className="noMargin textCenter">
-						<span>{days[(this.props.date.getDay()+6) % 7]}</span>
+						<span>{days[(this.props.date.getDay() + 6) % 7]} &nbsp; {this.props.date.getDate() + 6}</span>
 					</Col>
 					
 				</Row>

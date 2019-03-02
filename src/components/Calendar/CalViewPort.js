@@ -11,9 +11,12 @@ export class CalViewPort extends Component {
 		startHour: 0,
 		endHour: 23,
 		appointments: [],
+		possibleSelections: [],
 	}
 
 	componentDidUpdate() {
+
+		// AVAILABILITY
 		if (!this.props.availability) return;
 		let startHour = 25;
 		let endHour = -1;
@@ -28,6 +31,7 @@ export class CalViewPort extends Component {
 		if (this.state.endHour !== endHour)
 			this.setState({ endHour });
 
+		// APPOINTMENTS
 		let appointments = [];
 		for (let i = 0; i < utils.weekdays.length; ++i) {
 			appointments.push(this.props.appointments.filter( appt => utils.daysBetween(appt.datetime, this.props.date) === i));
@@ -44,7 +48,23 @@ export class CalViewPort extends Component {
 				}
 			}
 		}
-		console.log(this.state.appointments);
+		
+		// POSSIBLE SELECTIONS
+		let possibleSelections = [];
+		for (let i = 0; i < utils.weekdays.length; ++i) {
+			possibleSelections.push(this.props.possibleSelections.filter( s => utils.daysBetween(s.datetime, this.props.date) === i ));
+		}
+
+		for (let d = 0; d < possibleSelections.length; ++d) {
+			if (d >= this.state.possibleSelections.length) {
+				this.setState({ possibleSelections });
+			}
+			for (let a = 0; a < possibleSelections[d]; ++a) {
+				if (a >= this.state.possibleSelections[d].length || this.state.possibleSelections[d][a] !== possibleSelections[d][a]) {
+					this.setState({ possibleSelections });
+				}
+			}
+		}
 	}
 
 	render() {
@@ -54,36 +74,88 @@ export class CalViewPort extends Component {
 
 					{/* Time Slots */}
 					<Col xs={1} className="noPaddingRight">
-						<CalTimeSlots startHour={this.state.startHour} endHour={this.state.endHour} />
+						<CalTimeSlots 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+						/>
 					</Col>
 					
 					{/* Days of the week */}
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[0]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[0]}
+							possibleSelections={this.state.possibleSelections[0]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()}
+						/>
 					</Col>
 
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[1]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[1]}
+							possibleSelections={this.state.possibleSelections[1]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+1}
+						/>
 					</Col>
 
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[2]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[2]}
+							possibleSelections={this.state.possibleSelections[2]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+2}
+						/>
 					</Col>
 
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[3]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[3]}
+							possibleSelections={this.state.possibleSelections[3]}	
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+3}
+						/>
 					</Col>
 
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[4]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[4]}
+							possibleSelections={this.state.possibleSelections[4]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+4}
+						/>
 					</Col>
 
 					<Col className="noPadding">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[5]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[5]}
+							possibleSelections={this.state.possibleSelections[5]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+5}
+						/>
 					</Col>
 
 					<Col className="noPaddingLeft">
-						<CalDayCol startHour={this.state.startHour} endHour={this.state.endHour} appointments={this.state.appointments[6]}/>
+						<CalDayCol 
+							startHour={this.state.startHour} 
+							endHour={this.state.endHour} 
+							appointments={this.state.appointments[6]}
+							possibleSelections={this.state.possibleSelections[6]}
+							serviceLength={this.props.serviceLength}
+							day={this.props.date.getDate()+6}
+						/>
 					</Col>
 				</Row>
 			</div>

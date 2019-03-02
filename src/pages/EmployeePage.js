@@ -32,7 +32,6 @@ export class EmployeePage extends Component {
 					let employee = res.data.store.employees[i];
 					if (employee._id.toString() === this.props.match.params.employeeId){
 						this.setState({employee});
-						console.log(employee);
 						break;
 					}
 				}
@@ -71,12 +70,30 @@ export class EmployeePage extends Component {
 						</Col>
 					</Row>
 					<hr />	
-					<Calendar availability={this.state.employee.hours} appointments={this.state.employee.appointments}/>
+					<Row>
+						<Col xs={3}></Col>
+						<Col>
+							<Calendar 
+								availability={this.state.employee.hours} 
+								appointments={this.state.employee.appointments}
+								possibleSelections={[
+									{
+										datetime: date,
+										length: 45
+									}
+								]}
+								serviceLength={(this.state.employee.services[0]) ? this.state.employee.services[0].length : 0}
+							/>
+						</Col>
+					</Row>
 				</MyContainer>
 			</div>
 		)
 	}
 }
+
+let date = new Date();
+date.setHours(16);
 
 const ProfileImageStyle = {
 	borderRadius: "50%",
