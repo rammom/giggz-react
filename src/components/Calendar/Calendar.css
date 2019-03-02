@@ -1,0 +1,46 @@
+.timeText {
+	padding-left: 0.5em;
+	font-size: 0.8em;
+}
+
+.redShade {
+	background-color: #dd0f0f;
+}
+/* .greenShade {
+	background-color: rgba(0, 255, 34, 0.247);
+} */
+.greenShadeHover {
+	background-color: rgb(0, 255, 64);
+}
+
+.textCenter {
+	text-align: center;
+}
+
+.topBorder {
+	border-top: 1px solid #000000aa;
+}
+.bottomBorder {
+	border-bottom: 1px solid #000000aa;
+}
+
+.noPadding {
+	padding: 0;
+}
+.noPaddingRight {
+	padding-right: 0;
+}
+.noPaddingLeft {
+	padding-left: 0;
+}
+
+.noMargin {
+	margin: 0;
+}
+
+.hourSlot {
+	height: 8rem;
+}
+.quarterSlot {
+	height: 25%;
+}

@@ -5,6 +5,7 @@ import MyNavbar from '../components/MyNavbar';
 import MyContainer from '../components/MyContainer';
 import MyButton from '../components/MyButton';
 import { Row, Col, ProgressBar } from 'react-bootstrap';
+import Calendar from '../components/Calendar/Calendar';
 
 
 let click_distance = 3;
@@ -16,7 +17,9 @@ export class EmployeePage extends Component {
 		store: {},
 		employee: {
 			user: {},
-			services: []
+			services: [],
+			hours: null,
+			appointments: []
 		}
 	}
 
@@ -35,7 +38,7 @@ export class EmployeePage extends Component {
 				console.log(this.state.employee.user.firstname);
 			})
 			.catch(err => {
-				console.log(err.response);
+				console.log(err);
 			})
 	}
 
@@ -66,13 +69,31 @@ export class EmployeePage extends Component {
 							<h5>4.8 <i className="fa fa-star"></i></h5>
 						</Col>
 					</Row>
-					<hr />					
-
+					<hr />	
+					<Row>
+						<Col xs={3}></Col>
+						<Col>
+							<Calendar 
+								availability={this.state.employee.hours} 
+								appointments={this.state.employee.appointments}
+								possibleSelections={[
+									{
+										datetime: date,
+										length: 45
+									}
+								]}
+								serviceLength={(this.state.employee.services[0]) ? this.state.employee.services[0].length : 0}
+							/>
+						</Col>
+					</Row>
 				</MyContainer>
 			</div>
 		)
 	}
 }
+
+let date = new Date();
+date.setHours(16);
 
 const ProfileImageStyle = {
 	borderRadius: "50%",
