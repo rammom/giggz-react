@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 
 import utils from '../../utils';
 import CalTimeSlots from './CalTimeSlots';
@@ -83,78 +84,92 @@ export class CalViewPort extends Component {
 					{/* Days of the week */}
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[0]}
 							possibleSelections={this.state.possibleSelections[0]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()}
+							date={moment(this.props.date)}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[1]}
 							possibleSelections={this.state.possibleSelections[1]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+1}
+							date={moment(this.props.date).add(1, 'days')}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[2]}
 							possibleSelections={this.state.possibleSelections[2]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+2}
+							date={moment(this.props.date).add(2, 'days')}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[3]}
 							possibleSelections={this.state.possibleSelections[3]}	
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+3}
+							date={moment(this.props.date).add(3, 'days')}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[4]}
 							possibleSelections={this.state.possibleSelections[4]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+4}
+							date={moment(this.props.date).add(4, 'days')}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[5]}
 							possibleSelections={this.state.possibleSelections[5]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+5}
+							date={moment(this.props.date).add(5, 'days')}
 						/>
 					</Col>
 
 					<Col className="noPaddingLeft">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[6]}
 							possibleSelections={this.state.possibleSelections[6]}
 							serviceLength={this.props.serviceLength}
 							day={this.props.date.getDate()+6}
+							date={moment(this.props.date).add(6, 'days')}
 						/>
 					</Col>
 				</Row>

@@ -6,6 +6,7 @@ import MyContainer from '../components/MyContainer';
 import MyButton from '../components/MyButton';
 import { Row, Col, ProgressBar } from 'react-bootstrap';
 import Calendar from '../components/Calendar/Calendar';
+import ServiceSelection from '../components/ServiceSelection';
 
 
 let click_distance = 3;
@@ -20,7 +21,12 @@ export class EmployeePage extends Component {
 			services: [],
 			hours: null,
 			appointments: []
-		}
+		},
+		service: {
+			name: '',
+			length: 0
+		},
+		appointment: null,
 	}
 
 	async componentWillMount() {
@@ -31,7 +37,10 @@ export class EmployeePage extends Component {
 				for (let i = 0; i < res.data.store.employees.length; ++i){
 					let employee = res.data.store.employees[i];
 					if (employee._id.toString() === this.props.match.params.employeeId){
+						let service = employee.services[0];
 						this.setState({employee});
+						this.setState({service});
+						console.log(service);
 						break;
 					}
 				}
@@ -40,6 +49,16 @@ export class EmployeePage extends Component {
 			.catch(err => {
 				console.log(err);
 			})
+	}
+
+	updateService = async (serv) => {
+		let service = this.state.employee.services.filter( s => s.name === serv )[0];
+		this.setState({ service });
+	}
+
+	setAppointment = (appointment) => {
+		console.log("set appointment for ", appointment);
+		this.setState({ appointment });
 	}
 
 	render() {
@@ -71,9 +90,18 @@ export class EmployeePage extends Component {
 					</Row>
 					<hr />	
 					<Row>
-						<Col xs={3}></Col>
+						<Col xs={3}>
+							<ServiceSelection 
+								services={this.state.employee.services}
+								service={this.state.service}
+								updateService={this.updateService}
+								appointment={this.state.appointment}
+							/>
+						</Col>
 						<Col>
+							<h6 style={{textAlign: "center"}}>Select your prefered time slot below.</h6>
 							<Calendar 
+								setAppointment={this.setAppointment}
 								availability={this.state.employee.hours} 
 								appointments={this.state.employee.appointments}
 								possibleSelections={[
@@ -82,7 +110,7 @@ export class EmployeePage extends Component {
 										length: 45
 									}
 								]}
-								serviceLength={(this.state.employee.services[0]) ? this.state.employee.services[0].length : 0}
+								serviceLength={parseInt(this.state.service.length)}
 							/>
 						</Col>
 					</Row>
