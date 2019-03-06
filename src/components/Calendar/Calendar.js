@@ -16,6 +16,7 @@ export class Calendar extends Component {
 					date={this.state.startDate} 
 				/>
 				<CalViewPort 
+					setAppointment={this.props.setAppointment}
 					date={this.state.startDate}
 					style={CalendarStyles}
 					availability={this.props.availability} 
