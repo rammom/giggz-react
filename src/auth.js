@@ -33,7 +33,11 @@ class Auth {
 				window.location.replace('/');
 				return success ? success(res) : null;
 			})
-			.catch(err => fail ? fail(err) : null);
+			.catch(err => {
+				sessionStorage.setItem('user', null);
+				window.location.replace('/');
+				return (fail) ? fail(err) : null
+			});
 	}
 
 	getCachedUser() {
