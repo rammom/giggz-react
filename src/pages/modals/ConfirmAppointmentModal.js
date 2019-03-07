@@ -28,7 +28,7 @@ function ConfirmAppointmentModal(props) {
 				<Button variant="secondary" onClick={props.onHide}>
 					Cancel
             	</Button>
-				<MyButton text="Confirm" onClick={props.onHide} />
+				<MyButton text="Confirm" onClick={props.scheduleAppointment} />
 			</Modal.Footer>
 		</Modal>
 	)

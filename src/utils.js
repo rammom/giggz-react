@@ -14,8 +14,12 @@ class Utils {
 	}
 
 	daysBetween(first, second) {
+		
 		first = new Date(first);
 		second = new Date(second);
+
+		console.log(first);
+		console.log(second);
 
 		// Copy date parts of the timestamps, discarding the time parts.
 		var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());
@@ -27,7 +31,7 @@ class Utils {
 		var days = millisBetween / millisecondsPerDay;
 
 		// Round down.
-		return Math.abs(Math.floor(days));
+		return Math.floor(days);
 	}
 
 	arraysEqual(first, second) {

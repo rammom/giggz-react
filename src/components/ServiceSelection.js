@@ -68,6 +68,7 @@ export class ServiceSelection extends Component {
 					show={this.state.display_confirm_appointment_modal}
 					onHide={this.hide_confirm_appointment_modal}
 					appointment={this.props.appointment}
+					scheduleAppointment={this.props.scheduleAppointment}
 				/>
 			</div>
 		)
