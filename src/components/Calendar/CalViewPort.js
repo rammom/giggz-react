@@ -34,9 +34,10 @@ export class CalViewPort extends Component {
 		// APPOINTMENTS
 		let appointments = [];
 		for (let i = 0; i < utils.weekdays.length; ++i) {
-			appointments.push(this.props.appointments.filter( appt => utils.daysBetween(appt.datetime, this.props.date) === i));
-			appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
+			appointments.push(this.props.appointments.filter(appt => utils.daysBetween(this.props.date, appt.datetime) === i));
+			if (appointments[i]) appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
 		}
+		console.log(this.props.appointments);
 
 		for (let d = 0; d < appointments.length; ++d){
 			if (d >= this.state.appointments.length) {

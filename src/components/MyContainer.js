@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 
-function MyContainer(props) {
+function MyContainer({style, ...props}) {
 	return (
-		<Container style={ContainerStyles}>
+		<Container style={{...ContainerStyles, ...style}}>
 			{props.children}
 		</Container>
 	)

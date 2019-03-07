@@ -71,8 +71,21 @@ export class EmployeePage extends Component {
 		if (refresh) this.setState({ refreshCalendar });
 		this.setState({ appointment });
 	}
-	scheduleAppointment = () => {
-		//let body =
+	scheduleAppointment = async () => {
+		if (!this.state.employee._id || !this.state.appointment.service._id || !this.state.appointment.date) return;
+		let body = {
+			employeeid: this.state.employee._id,
+			serviceid: this.state.appointment.service._id,
+			date: new Date(this.state.appointment.date),
+		}
+		await axios.post('/api/employee/appointment', body)
+			.then(res => {
+				console.log(res.data);
+				this.props.history.push(`/receipt/${res.data.appointment._id}`)
+			})
+			.catch(err => {
+				console.log(err);
+			})
 	}
 
 	resetClear = () => {
@@ -129,7 +142,7 @@ export class EmployeePage extends Component {
 								appointment={this.state.appointment}
 								cancelAppointment={this.cancelAppointment}
 								promptLogin={this.show_prompt_login_modal}
-								
+								scheduleAppointment={this.scheduleAppointment}
 							/>
 						</Col>
 						<Col>

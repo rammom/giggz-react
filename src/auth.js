@@ -1,6 +1,18 @@
 import axios from 'axios';
 
 class Auth {
+	constructor() {
+		// Add a response interceptor
+		axios.interceptors.response.use(function (response) {
+			// Do something with response data
+			console.log(response);
+			return response;
+		}, async function (error) {
+			// Do something with response error
+			console.log(error);
+			return await this.logout();
+		});
+	}
 
 	async register(body, success, fail) {
 		console.log("registering...");
