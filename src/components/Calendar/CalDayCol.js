@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import './Calendar.css';
 import { Row } from 'react-bootstrap';
+import moment from 'moment';
+moment().format();
 
 export class CalDayCol extends Component {
 
 	state = {
 		quartersTaken: new Set(),
-		blocksAvailable: {},	
+		blocksAvailable: {},
+		highlightedBlocks: [] 
 	}
 
 	
 	componentDidUpdate(previousProps) {
+		if (this.props.clear){
+			this.unhighlightStateBlocks();
+			this.props.resetClear();
+		}
 		if (JSON.stringify(this.props.appointments) !== JSON.stringify(previousProps.appointments)) {
 			let appointments = [...this.props.appointments];
 			this.setState({ appointments });
@@ -92,41 +99,43 @@ export class CalDayCol extends Component {
 	}
 
 	highlightBlock = (e) => {
-		if (this.state.blocksAvailable[e.target.id]){
-			// let hour = e.target.id.split('_')[1];
-			// let ampm = (hour < 12) ? "am" : "pm";
-			// if (hour > 12) hour = hour%12;
-			// if (hour === 0) hour = 12;
-			// let quarter = e.target.id.split('_')[2];
-			// let minute = (15*(parseInt(quarter)-1));
-			// if (minute === 0) minute = "00";
-			// let time = `${hour}:${minute} ${ampm}`;
-			//document.getElementById(e.target.id).innerHTML = `<span>${time}</span>`;
+		if (this.state.blocksAvailable[e.target.id] && !this.props.user_appointment.date){
+			let highlightedBlocks = this.state.highlightedBlocks;			
 			this.state.blocksAvailable[e.target.id].forEach(block => {
 				document.getElementById(block).classList.add("greenShadeHover");
+				highlightedBlocks.push(block);
 			})
+			this.setState({highlightedBlocks});
 		}
 	}
 	unhighlightBlock = (e) => {
-		if (this.state.blocksAvailable[e.target.id]) {
-			//document.getElementById(e.target.id).innerHTML = "";
+		if (this.state.blocksAvailable[e.target.id] && !this.props.user_appointment.date) {
+			let highlightedBlocks = this.state.highlightedBlocks;
 			this.state.blocksAvailable[e.target.id].forEach(block => {
 				document.getElementById(block).classList.remove("greenShadeHover");
+				highlightedBlocks.splice(highlightedBlocks.indexOf(block), 1);
 			})
+			this.setState({highlightedBlocks});
 		}
+	}
+	unhighlightStateBlocks = () => {
+		let highlightedBlocks = this.state.highlightedBlocks;
+		highlightedBlocks.forEach(block => {
+			document.getElementById(block).classList.remove("greenShadeHover");
+		});
+		highlightedBlocks = [];
+		this.setState({ highlightedBlocks });
 	}
 
 	handleClick = (e) => {
 		if (!e.target.id) return;
-		let hour = parseInt(e.target.id.split('_')[1]);
-		let quarter = e.target.id.split('_')[2];
-		let minute = (15 * (parseInt(quarter) - 1));
-		let appointment = {
-			date: this.props.date,
-			hour: hour,
-			minute: minute,
+		if (this.state.blocksAvailable[e.target.id] && !this.props.user_appointment.date) {
+			let hour = parseInt(e.target.id.split('_')[1]);
+			let quarter = e.target.id.split('_')[2];
+			let minute = (15 * (parseInt(quarter) - 1));
+			let date = moment(this.props.date).hour(hour).minute(minute)
+			this.props.setAppointment(date);
 		}
-		this.props.setAppointment(appointment);
 	}
 
 	gen_time_slots = () => {

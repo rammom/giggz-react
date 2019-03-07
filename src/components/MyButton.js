@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-function MyButton({text, ...props}) {
+function MyButton({text, style, ...props}) {
 	return (
-		<Button {...props} variant="dark" style={ButtonStyles}>
+		<Button {...props} variant="dark" style={{...ButtonStyles, ...style}}>
 			{text}
 		</Button>
 	)
