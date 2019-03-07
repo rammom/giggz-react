@@ -22,29 +22,29 @@ export class EmployeePage extends Component {
 			hours: null,
 			appointments: []
 		},
-		service: {
-			name: '',
-			length: 0
+		appointment: {
+			date: null,
+			service: {
+				name: '',
+				length: 0
+			}
 		},
-		appointment: null,
+		refreshCalendar: false,
+		display_prompt_login_modal: false,
 	}
 
 	async componentWillMount() {
 		await axios.get(`/api/store/${this.props.match.params.slug}`)
 			.then(res => {
-				console.log(res.data);
 				this.setState({ store: res.data.store });
 				for (let i = 0; i < res.data.store.employees.length; ++i){
 					let employee = res.data.store.employees[i];
 					if (employee._id.toString() === this.props.match.params.employeeId){
-						let service = employee.services[0];
-						this.setState({employee});
-						this.setState({service});
-						console.log(service);
+						this.setState({ employee });
+						this.updateService(employee.services[0].name);
 						break;
 					}
 				}
-				console.log(this.state.employee.user.firstname);
 			})
 			.catch(err => {
 				console.log(err);
@@ -53,18 +53,50 @@ export class EmployeePage extends Component {
 
 	updateService = async (serv) => {
 		let service = this.state.employee.services.filter( s => s.name === serv )[0];
-		this.setState({ service });
+		let appointment = this.state.appointment;
+		appointment.service = service;
+		appointment.date = null;
+		this.setState({ appointment });
 	}
 
-	setAppointment = (appointment) => {
-		console.log("set appointment for ", appointment);
+	setAppointment = (date) => {
+		let appointment = this.state.appointment;
+		appointment.date = date;
 		this.setState({ appointment });
+	}
+	cancelAppointment = (refresh=true) => {
+		let appointment = this.state.appointment;
+		appointment.date = null;
+		let refreshCalendar = true;
+		if (refresh) this.setState({ refreshCalendar });
+		this.setState({ appointment });
+	}
+	scheduleAppointment = () => {
+		//let body =
+	}
+
+	resetClear = () => {
+		let refreshCalendar = false;
+		this.setState({refreshCalendar});
+		console.log(this.state.refreshCalendar);
+	}
+
+	show_prompt_login_modal = () => {
+		this.setState({display_prompt_login_modal: true});
+	}
+	confirm_prompt_login_display = () => {
+		this.setState({display_prompt_login_modal: false});
 	}
 
 	render() {
 		return (
 			<div>
-				<MyNavbar color="#dd0000" history={this.props.history} />
+				<MyNavbar 
+					color="#dd0000" 
+					history={this.props.history} 
+					show_prompt_login_modal={this.state.display_prompt_login_modal} 
+					confirm_prompt_login_display={this.confirm_prompt_login_display}
+				/> 
 				<MyContainer>
 					<Row>
 						<Col sm={2}>
@@ -93,9 +125,11 @@ export class EmployeePage extends Component {
 						<Col xs={3}>
 							<ServiceSelection 
 								services={this.state.employee.services}
-								service={this.state.service}
 								updateService={this.updateService}
 								appointment={this.state.appointment}
+								cancelAppointment={this.cancelAppointment}
+								promptLogin={this.show_prompt_login_modal}
+								
 							/>
 						</Col>
 						<Col>
@@ -104,13 +138,11 @@ export class EmployeePage extends Component {
 								setAppointment={this.setAppointment}
 								availability={this.state.employee.hours} 
 								appointments={this.state.employee.appointments}
-								possibleSelections={[
-									{
-										datetime: date,
-										length: 45
-									}
-								]}
-								serviceLength={parseInt(this.state.service.length)}
+								user_appointment={this.state.appointment}
+								serviceLength={parseInt(this.state.appointment.service.length)}
+								clear={this.state.refreshCalendar}
+								resetClear={this.resetClear}
+								cancelAppointment={this.cancelAppointment}
 							/>
 						</Col>
 					</Row>

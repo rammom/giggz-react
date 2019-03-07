@@ -2,6 +2,9 @@
 class Utils {
 
 	weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+	weekdays_upper = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	weekdays_upper_short = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 	minutes_to_time = (minutes) => {
 		return {

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import CalMenuBar from './CalMenuBar';
 import CalViewPort from './CalViewPort';
+import moment from 'moment';
+moment().format();
 
 export class Calendar extends Component {
 
 	state = {
-		startDate: new Date(),
+		startDate: moment(new Date()).startOf('day'),
 	}
 
 	render() {
@@ -21,8 +23,12 @@ export class Calendar extends Component {
 					style={CalendarStyles}
 					availability={this.props.availability} 
 					appointments={this.props.appointments} 
+					user_appointment={this.props.user_appointment}
 					possibleSelections={this.props.possibleSelections}
 					serviceLength={this.props.serviceLength}
+					clear={this.props.clear}
+					resetClear={this.props.resetClear}
+					cancelAppointment={this.props.cancelAppointment}
 				/>
 			</div>
 		)

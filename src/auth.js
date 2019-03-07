@@ -19,7 +19,6 @@ class Auth {
 			.then(res => {
 				this.authenticated = true;
 				sessionStorage.setItem('user', JSON.stringify(res.data.user));
-				window.location.replace('/');
 				return success ? success(res) : null;
 			})
 			.catch(err => fail ? fail(err) : null);
