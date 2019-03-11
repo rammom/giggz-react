@@ -9,17 +9,32 @@ export class Calendar extends Component {
 
 	state = {
 		startDate: moment(new Date()).startOf('day'),
+		date: moment(new Date()).startOf('day')
+	}
+
+	moveForward = () => {
+		let date = this.state.date;
+		date.add(1, 'weeks');
+		this.setState({date});
+	}
+	moveBackward = () => {
+		let date = this.state.date;
+		date.subtract(1, 'weeks');
+		if (date < this.state.startDate) return;
+		else this.setState({date});
 	}
 
 	render() {
 		return (
 			<div>
 				<CalMenuBar 
-					date={this.state.startDate} 
+					date={this.state.date} 
+					moveForward={this.moveForward}
+					moveBackward={this.moveBackward}
 				/>
 				<CalViewPort 
 					setAppointment={this.props.setAppointment}
-					date={this.state.startDate}
+					date={this.state.date}
 					style={CalendarStyles}
 					availability={this.props.availability} 
 					appointments={this.props.appointments} 
@@ -29,6 +44,7 @@ export class Calendar extends Component {
 					clear={this.props.clear}
 					resetClear={this.props.resetClear}
 					cancelAppointment={this.props.cancelAppointment}
+					requestClear={this.props.requestClear}
 				/>
 			</div>
 		)

@@ -2,6 +2,7 @@
 class Utils {
 
 	weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+	weekdays2 = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 	weekdays_upper = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	weekdays_upper_short = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -17,9 +18,6 @@ class Utils {
 		
 		first = new Date(first);
 		second = new Date(second);
-
-		console.log(first);
-		console.log(second);
 
 		// Copy date parts of the timestamps, discarding the time parts.
 		var one = new Date(first.getFullYear(), first.getMonth(), first.getDate());

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Card, CardDeck, ListGroup, ListGroupItem, Row, Col, ProgressBar } from 'react-bootstrap';
+import { Card, CardDeck, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 
 import MyNavbar from '../components/MyNavbar';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
+import StoreInfoModal from '../pages/modals/StoreInfoModal';
 import GoogleMap from '../components/GoogleMap';
 import axios from 'axios';
 
-
-
-
-let click_distance = 4;
-let progress = `${(100/5)*(6-click_distance)}`
 
 export class StorePage extends Component {
 
@@ -24,7 +20,8 @@ export class StorePage extends Component {
 				state: '',
 				country: '',
 			}
-		}
+		},
+		display_store_info_modal: false,
 	}
 
 	async componentWillMount() {
@@ -42,7 +39,6 @@ export class StorePage extends Component {
 
 		let services = [];
 		employee.services.forEach(service => {
-			console.log(service)
 			services.push(
 				<ListGroupItem key={service._id}><span>{service.name}</span><span style={{float: "right"}}>${service.price}</span></ListGroupItem>
 			);
@@ -92,28 +88,46 @@ export class StorePage extends Component {
 		return cardDecks;
 	}
 
+	show_store_info_modal = () => {
+		this.setState({display_store_info_modal: true});
+	}
+	hide_store_info_modal = () => {
+		this.setState({display_store_info_modal: false});
+	}
+
 	render() {
 		return (
 			<div>
 				<MyNavbar color="#dd0000" history={this.props.history}/>
 				<MyContainer>
-					<Row>
+					{/* <Row>
 						<Col sm={2}>
 							<MyButton text="Go Back" size="sm" onClick={() => { this.props.history.goBack() }} />
 						</Col>
-						<Col style={{ margin: "auto" }}>
-							<ProgressBar animated variant="danger" now={progress} label={`${click_distance} clicks away`} />
+					</Row>
+					<br/> */}
+					<Row>
+						<Col>
+							<span style={{fontSize: '2em'}}>{this.state.store.name}</span>
+							<MyButton text="Contact Us." style={{float: "right"}} onClick={this.show_store_info_modal}/>
+							<StoreInfoModal 
+								show={this.state.display_store_info_modal}
+								onHide={this.hide_store_info_modal}
+								store={this.state.store}
+							/>
+							<h5>Choose from a selection of <b style={{ color: "#dd0000" }}>{this.state.store.name}</b>'s professional employees and services.</h5>
 						</Col>
 					</Row>
-					<br/>
-					<h1>Treat Yourself With The Very Best.</h1>
-					<h5>Choose from a selection of <b style={{color: "#dd0000"}}>{this.state.store.name}</b>'s professional employees and services.</h5>
-					<div>
-						<GoogleMap 
-							address={this.state.store.address}
-							zoom={12}
-						/>
-					</div>
+					<Row>
+						<Col>
+							<div>
+								<GoogleMap
+									address={this.state.store.address}
+									zoom={12}
+								/>
+							</div>
+						</Col>
+					</Row>
 					<hr/>
 					<CardDeck>
 						{this.gen_employee_cards()}

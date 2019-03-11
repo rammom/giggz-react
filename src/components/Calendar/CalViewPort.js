@@ -14,7 +14,7 @@ export class CalViewPort extends Component {
 		appointments: [],
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(oldProps) {
 
 		// AVAILABILITY
 		if (!this.props.availability) return;
@@ -32,20 +32,22 @@ export class CalViewPort extends Component {
 			this.setState({ endHour });
 
 		// APPOINTMENTS
-		let appointments = [];
-		for (let i = 0; i < utils.weekdays.length; ++i) {
-			appointments.push(this.props.appointments.filter(appt => utils.daysBetween(this.props.date, appt.datetime) === i));
-			if (appointments[i]) appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
-		}
-		console.log(this.props.appointments);
-
-		for (let d = 0; d < appointments.length; ++d){
-			if (d >= this.state.appointments.length) {
-				this.setState({ appointments });
+		if (this.props.appointments !== oldProps.appointments){
+			this.props.requestClear();
+			let appointments = [];
+			for (let i = 0; i < utils.weekdays.length; ++i) {
+				appointments.push(this.props.appointments.filter(appt => utils.daysBetween(this.props.date, appt.datetime) === i));
+				if (appointments[i]) appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
 			}
-			for (let a = 0; a < appointments[d]; ++a){
-				if (a >= this.state.appointments[d].length || this.state.appointments[d][a] !== appointments[d][a]){
+
+			for (let d = 0; d < appointments.length; ++d){
+				if (d >= this.state.appointments.length) {
 					this.setState({ appointments });
+				}
+				for (let a = 0; a < appointments[d]; ++a){
+					if (a >= this.state.appointments[d].length || this.state.appointments[d][a] !== appointments[d][a]){
+						this.setState({ appointments });
+					}
 				}
 			}
 		}

@@ -9,10 +9,9 @@ export class AppointmentReceipt extends Component {
 			<div>
 				<Card style={{ width: '90%', margin: 'auto' }}>
 					<Card.Body>
-
 						<Row>
 							<Col>
-								<h3>{this.props.appointment.store.name}</h3>
+								<h2>{this.props.appointment.store.name}</h2>
 								<p style={{ marginTop: '0px', marginBottom: "0px" }}>with <b style={{ fontSize: "1.05em" }}>{this.props.appointment.employee.user.firstname} {this.props.appointment.employee.user.lastname}</b></p>
 							</Col>
 							<Col>

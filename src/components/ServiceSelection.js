@@ -3,6 +3,7 @@ import { Form, Card, Button } from 'react-bootstrap';
 import MyButton from './MyButton';
 import utils from '../utils';
 import auth from '../auth';
+import dateFns from 'date-fns';
 
 import ConfirmAppointmentModal from '../pages/modals/ConfirmAppointmentModal';
 
@@ -48,9 +49,12 @@ export class ServiceSelection extends Component {
 					<Card.Body>
 						<Card.Title>{this.props.appointment.service.name}</Card.Title>
 						<Card.Text>
-								{utils.weekdays_upper[this.props.appointment.date.day()]}, {utils.months[this.props.appointment.date.month()]} {this.props.appointment.date.date()} {this.props.appointment.date.year()}
+								{utils.weekdays_upper[dateFns.getDay(this.props.appointment.date)]}, {utils.months[dateFns.getMonth(this.props.appointment.date)]} {dateFns.getDate(this.props.appointment.date)} {dateFns.getYear(this.props.appointment.date)}
 								<br />
-								at {this.props.appointment.date.format('hh:mm A')}
+								at {dateFns.format(this.props.appointment.date, 'h:mm A')}
+								<br />
+								<br />
+								{this.props.appointment.service.length} minutes
 						</Card.Text>
 						<hr />
 						<div>

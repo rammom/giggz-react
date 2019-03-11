@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import MyButton from '../MyButton';
 import './Calendar.css';
 import utils from '../../utils';
 
@@ -8,12 +9,12 @@ let days = utils.weekdays_upper_short;
 
 export class CalMenuBar extends Component {
 
-
-
 	render() {
 		return (
 			<div style={MenuBarStyles}>
 				<span style={TitleText}><b>{months[this.props.date.month()]}</b> {this.props.date.year()}</span>
+				<MyButton size='sm' text="prev" onClick={this.props.moveBackward}/>
+				<MyButton size='sm' text="next" onClick={this.props.moveForward}/>
 				<Row>
 					<Col xs={1} className="noMargin"></Col>
 					<Col className="noMargin textCenter">

@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Card } from 'react-bootstrap';
 import utils from '../../utils';
 import MyButton from '../../components/MyButton';
+import dateFns from 'date-fns';
 
 function ConfirmAppointmentModal(props) {
 	console.log(props.appointment)
@@ -15,7 +16,7 @@ function ConfirmAppointmentModal(props) {
 				<Card style={{marginRight: "10%", marginLeft: "10%"}}>
 					<Card.Body>
 						<Card.Text>
-							<b>Date:</b> <span style={{float: "right"}}>{utils.weekdays_upper[props.appointment.date.day()]}, {utils.months[props.appointment.date.month()]} {props.appointment.date.date()} {props.appointment.date.year()}</span>
+							<b>Date:</b> <span style={{float: "right"}}>{utils.weekdays_upper[dateFns.getDay(props.appointment.date)]}, {utils.months[dateFns.getMonth(props.appointment.date)]} {dateFns.getDate(props.appointment.date)} {dateFns.getYear(props.appointment.date)}</span>
 							<br />
 							<b>Service:</b> <span style={{ float: "right" }}>{props.appointment.service.name}</span>
 							<br />

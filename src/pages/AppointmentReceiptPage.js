@@ -54,6 +54,12 @@ export class AppointmentReceiptPage extends Component {
 					history={this.props.history}
 				/>
 				<MyContainer>
+					{/* <Row>
+						<Col sm={2}>
+							<MyButton text="Go Back" size="sm" onClick={() => { this.props.history.goBack() }} />
+						</Col>
+					</Row>
+					<br /> */}
 					<Row style={PageOneStyles}> 
 						<Jumbotron style={JumbotronStyles}>
 							<div style={{ textAlign: "center" }}>
