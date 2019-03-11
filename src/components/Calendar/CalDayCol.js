@@ -126,6 +126,14 @@ export class CalDayCol extends Component {
 		highlightedBlocks = [];
 		this.setState({ highlightedBlocks });
 	}
+	unhighlightStateTakenBlocks = () => {
+		let quartersTaken = Array.from(this.state.quartersTaken);
+		quartersTaken.forEach(block => {
+			document.getElementById(block).classList.remove("redShade");
+		});
+		quartersTaken = new Set([]);
+		this.setState({ quartersTaken });
+	}
 
 	handleClick = (e) => {
 		if (!e.target.id) return;

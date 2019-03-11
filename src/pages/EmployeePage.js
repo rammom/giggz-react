@@ -3,14 +3,10 @@ import axios from 'axios';
 
 import MyNavbar from '../components/MyNavbar';
 import MyContainer from '../components/MyContainer';
-import MyButton from '../components/MyButton';
-import { Row, Col, ProgressBar } from 'react-bootstrap';
-import Calendar from '../components/Calendar/Calendar';
+import { Row, Col } from 'react-bootstrap';
+//import Calendar from '../components/Calendar/Calendar';
+import Calendar from '../components/Calendar2/Calendar';
 import ServiceSelection from '../components/ServiceSelection';
-
-
-let click_distance = 3;
-let progress = `${(100 / 5) * (6 - click_distance)}`
 
 export class EmployeePage extends Component {
 
@@ -20,7 +16,9 @@ export class EmployeePage extends Component {
 			user: {},
 			services: [],
 			hours: null,
-			appointments: []
+			appointments: [],
+			startTime: null,
+			endTime: null,
 		},
 		appointment: {
 			date: null,
@@ -67,8 +65,7 @@ export class EmployeePage extends Component {
 	cancelAppointment = (refresh=true) => {
 		let appointment = this.state.appointment;
 		appointment.date = null;
-		let refreshCalendar = true;
-		if (refresh) this.setState({ refreshCalendar });
+		if (refresh) this.clearCal();
 		this.setState({ appointment });
 	}
 	scheduleAppointment = async () => {
@@ -80,7 +77,6 @@ export class EmployeePage extends Component {
 		}
 		await axios.post('/api/employee/appointment', body)
 			.then(res => {
-				console.log(res.data);
 				this.props.history.push(`/receipt/${res.data.appointment._id}`)
 			})
 			.catch(err => {
@@ -88,10 +84,13 @@ export class EmployeePage extends Component {
 			})
 	}
 
+	clearCal = () => {
+		let refreshCalendar = true;
+		this.setState({ refreshCalendar });
+	}
 	resetClear = () => {
 		let refreshCalendar = false;
 		this.setState({refreshCalendar});
-		console.log(this.state.refreshCalendar);
 	}
 
 	show_prompt_login_modal = () => {
@@ -111,15 +110,12 @@ export class EmployeePage extends Component {
 					confirm_prompt_login_display={this.confirm_prompt_login_display}
 				/> 
 				<MyContainer>
-					<Row>
+					{/* <Row>
 						<Col sm={2}>
 							<MyButton text="Go Back" size="sm" onClick={() => { this.props.history.goBack() }} />
 						</Col>
-						<Col style={{ margin: "auto" }}>
-							<ProgressBar animated variant="danger" now={progress} label={`${click_distance} clicks away`} />
-						</Col>
 					</Row>
-					<br />
+					<br /> */}
 					<Row>
 						<Col sm={1} style={{padding: "0"}}>
 							<img
@@ -147,7 +143,7 @@ export class EmployeePage extends Component {
 						</Col>
 						<Col>
 							<h6 style={{textAlign: "center"}}>Select your prefered time slot below.</h6>
-							<Calendar 
+							{/* <Calendar 
 								setAppointment={this.setAppointment}
 								availability={this.state.employee.hours} 
 								appointments={this.state.employee.appointments}
@@ -156,6 +152,18 @@ export class EmployeePage extends Component {
 								clear={this.state.refreshCalendar}
 								resetClear={this.resetClear}
 								cancelAppointment={this.cancelAppointment}
+								requestClear={this.clearCal}
+							/> */}
+							<Calendar 
+								availability={this.state.employee.hours}
+								appointments={this.state.employee.appointments.map(appt => {
+									return {
+										datetime: new Date(appt.datetime),
+										length: appt.service.length,
+									}
+								})}
+								serviceLength={parseInt(this.state.appointment.service.length)}
+								setAppointment={this.setAppointment}
 							/>
 						</Col>
 					</Row>
