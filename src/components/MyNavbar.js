@@ -5,6 +5,7 @@ import auth from '../auth';
 import LoginModal from '../pages/modals/LoginModal';
 import UserModal from '../pages/modals/UserModal';
 import RegisterModal from '../pages/modals/RegisterModal';
+import PromptLoginModal from '../pages/modals/PromptLoginModal';
 
 export class MyNavbar extends Component {
 	constructor(props) {
@@ -37,6 +38,7 @@ export class MyNavbar extends Component {
 		display_login_modal: false,
 		display_register_modal: false,
 		display_user_modal: false,
+		display_prompt_login_modal: false 
 	}
 
 	register = async (user) => {
@@ -66,11 +68,28 @@ export class MyNavbar extends Component {
 		)
 	}
 
+	componentDidUpdate() {
+		if (this.props.show_login_modal && !this.state.display_login_modal){
+			this.show_login_modal();
+		}
+		if (this.props.show_register_modal && !this.state.display_register_modal){
+			this.show_register_modal();
+		}
+		if (this.props.show_prompt_login_modal && !this.state.display_prompt_login_modal){
+			this.show_prompt_login_modal();
+			this.props.confirm_prompt_login_display();
+		}
+		if (this.props.show_user_modal && !this.state.display_user_modal){
+			this.show_user_modal();
+		}
+	}
+
 	login = async (user) => {
 		await auth.login(
 			user,
 			res => {
 				this.setState({ login_error: "" });
+				this.hide_login_modal();
 			},
 			err => {
 				this.setState({login_error: "Invalid email/password combination!"});
@@ -84,14 +103,25 @@ export class MyNavbar extends Component {
 
 	show_login_modal = () => {
 		this.hide_register_modal();
+		this.hide_prompt_login_modal();
 		this.setState({display_login_modal: true});
 	}
 	hide_login_modal = () => {
 		this.setState({display_login_modal: false});
 	}
 
+	show_prompt_login_modal = () => {
+		this.hide_register_modal();
+		this.hide_login_modal();
+		this.setState({ display_prompt_login_modal: true });
+	}
+	hide_prompt_login_modal = () => {
+		this.setState({ display_prompt_login_modal: false });
+	}
+
 	show_register_modal = () => {
 		this.hide_login_modal();
+		this.hide_prompt_login_modal()
 		this.setState({ display_register_modal: true });
 	}
 	hide_register_modal = () => {
@@ -102,6 +132,9 @@ export class MyNavbar extends Component {
 	}
 
 	show_user_modal = () => {
+		this.hide_register_modal();
+		this.hide_login_modal();
+		this.hide_prompt_login_modal();
 		this.setState({display_user_modal: true});
 	}
 	hide_user_modal = () => {
@@ -136,6 +169,12 @@ export class MyNavbar extends Component {
 						error={this.state.register_error} 
 						invalid_fields={this.state.register_invalid_fields} 
 						success={this.state.register_success} />
+					<PromptLoginModal
+						show={this.state.display_prompt_login_modal}
+						onHide={this.hide_prompt_login_modal}
+						login={this.show_login_modal}
+						register={this.show_register_modal}
+					/>
 
 					<Nav.Item hidden={!auth.isAuthenticated()} onClick={this.show_user_modal}>
 						<Nav.Link style={UsernameStyles}> 

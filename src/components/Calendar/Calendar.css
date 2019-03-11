@@ -11,6 +11,7 @@
 } */
 .greenShadeHover {
 	background-color: rgb(0, 255, 64);
+	cursor: pointer;
 }
 
 .textCenter {

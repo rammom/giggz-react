@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import MyNavbar from '../components/MyNavbar';
-import { Card, CardDeck, ListGroup, ListGroupItem, ProgressBar, Row, Col } from 'react-bootstrap';
+import { Card, CardDeck, ListGroup, ListGroupItem } from 'react-bootstrap';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
-
-let click_distance = 5;
-let progress = `${(100 / 5) * (6 - click_distance)}`
 
 export class StorePage extends Component {
 
@@ -86,15 +83,12 @@ export class StorePage extends Component {
 			<div>
 				<MyNavbar color="#dd0000" absolute={false} history={this.props.history}/>
 				<MyContainer>
-					<Row>
+					{/* <Row>
 						<Col sm={2}>
 							<MyButton text="Go Back" size="sm" onClick={() => {this.props.history.goBack()}}/>
 						</Col>
-						<Col style={{margin: "auto"}}>
-							<ProgressBar animated variant="danger" now={progress} label={`${click_distance} clicks away`} />
-						</Col>
 					</Row>
-					<br/>
+					<br/> */}
 					<h1>Your next Gigg is just a couple more clicks away.</h1>
 					<h5>Checkout some stores in your area.</h5>
 					<hr/>

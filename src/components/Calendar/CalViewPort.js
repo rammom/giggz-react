@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 
 import utils from '../../utils';
 import CalTimeSlots from './CalTimeSlots';
@@ -11,10 +12,9 @@ export class CalViewPort extends Component {
 		startHour: 0,
 		endHour: 23,
 		appointments: [],
-		possibleSelections: [],
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(oldProps) {
 
 		// AVAILABILITY
 		if (!this.props.availability) return;
@@ -32,36 +32,22 @@ export class CalViewPort extends Component {
 			this.setState({ endHour });
 
 		// APPOINTMENTS
-		let appointments = [];
-		for (let i = 0; i < utils.weekdays.length; ++i) {
-			appointments.push(this.props.appointments.filter( appt => utils.daysBetween(appt.datetime, this.props.date) === i));
-			appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
-		}
-
-		for (let d = 0; d < appointments.length; ++d){
-			if (d >= this.state.appointments.length) {
-				this.setState({ appointments });
+		if (this.props.appointments !== oldProps.appointments){
+			this.props.requestClear();
+			let appointments = [];
+			for (let i = 0; i < utils.weekdays.length; ++i) {
+				appointments.push(this.props.appointments.filter(appt => utils.daysBetween(this.props.date, appt.datetime) === i));
+				if (appointments[i]) appointments[i] = appointments[i].map(appt => ({datetime: appt.datetime, length: appt.service.length}));
 			}
-			for (let a = 0; a < appointments[d]; ++a){
-				if (a >= this.state.appointments[d].length || this.state.appointments[d][a] !== appointments[d][a]){
+
+			for (let d = 0; d < appointments.length; ++d){
+				if (d >= this.state.appointments.length) {
 					this.setState({ appointments });
 				}
-			}
-		}
-		
-		// POSSIBLE SELECTIONS
-		let possibleSelections = [];
-		for (let i = 0; i < utils.weekdays.length; ++i) {
-			possibleSelections.push(this.props.possibleSelections.filter( s => utils.daysBetween(s.datetime, this.props.date) === i ));
-		}
-
-		for (let d = 0; d < possibleSelections.length; ++d) {
-			if (d >= this.state.possibleSelections.length) {
-				this.setState({ possibleSelections });
-			}
-			for (let a = 0; a < possibleSelections[d]; ++a) {
-				if (a >= this.state.possibleSelections[d].length || this.state.possibleSelections[d][a] !== possibleSelections[d][a]) {
-					this.setState({ possibleSelections });
+				for (let a = 0; a < appointments[d]; ++a){
+					if (a >= this.state.appointments[d].length || this.state.appointments[d][a] !== appointments[d][a]){
+						this.setState({ appointments });
+					}
 				}
 			}
 		}
@@ -83,78 +69,105 @@ export class CalViewPort extends Component {
 					{/* Days of the week */}
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[0]}
-							possibleSelections={this.state.possibleSelections[0]}
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()}
+							date={moment(this.props.date)}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[1]}
-							possibleSelections={this.state.possibleSelections[1]}
+							user_appointment={this.props.user_appointment}							
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+1}
+							date={moment(this.props.date).add(1, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[2]}
-							possibleSelections={this.state.possibleSelections[2]}
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+2}
+							date={moment(this.props.date).add(2, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[3]}
-							possibleSelections={this.state.possibleSelections[3]}	
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+3}
+							date={moment(this.props.date).add(3, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[4]}
-							possibleSelections={this.state.possibleSelections[4]}
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+4}
+							date={moment(this.props.date).add(4, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 
 					<Col className="noPadding">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[5]}
-							possibleSelections={this.state.possibleSelections[5]}
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+5}
+							date={moment(this.props.date).add(5, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 
 					<Col className="noPaddingLeft">
 						<CalDayCol 
+							setAppointment={this.props.setAppointment}
 							startHour={this.state.startHour} 
 							endHour={this.state.endHour} 
 							appointments={this.state.appointments[6]}
-							possibleSelections={this.state.possibleSelections[6]}
+							user_appointment={this.props.user_appointment}
 							serviceLength={this.props.serviceLength}
-							day={this.props.date.getDate()+6}
+							date={moment(this.props.date).add(6, 'days')}
+							clear={this.props.clear}
+							resetClear={this.props.resetClear}
+							cancelAppointment={this.props.cancelAppointment}
 						/>
 					</Col>
 				</Row>

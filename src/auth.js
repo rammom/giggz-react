@@ -1,6 +1,18 @@
 import axios from 'axios';
 
 class Auth {
+	constructor() {
+		// Add a response interceptor
+		axios.interceptors.response.use(function (response) {
+			// Do something with response data
+			console.log(response);
+			return response;
+		}, async function (error) {
+			// Do something with response error
+			console.log(error);
+			return await this.logout();
+		});
+	}
 
 	async register(body, success, fail) {
 		console.log("registering...");
@@ -19,7 +31,6 @@ class Auth {
 			.then(res => {
 				this.authenticated = true;
 				sessionStorage.setItem('user', JSON.stringify(res.data.user));
-				window.location.replace('/');
 				return success ? success(res) : null;
 			})
 			.catch(err => fail ? fail(err) : null);
@@ -34,7 +45,11 @@ class Auth {
 				window.location.replace('/');
 				return success ? success(res) : null;
 			})
-			.catch(err => fail ? fail(err) : null);
+			.catch(err => {
+				sessionStorage.setItem('user', null);
+				window.location.replace('/');
+				return (fail) ? fail(err) : null
+			});
 	}
 
 	getCachedUser() {
