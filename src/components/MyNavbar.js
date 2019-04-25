@@ -183,12 +183,14 @@ export class MyNavbar extends Component {
 							{auth.getCachedUser().firstname} {auth.getCachedUser().lastname} 
 						</Nav.Link>						
 					</Nav.Item>
-					<UserModal hidden={!auth.isAuthenticated()} show={this.state.display_user_modal} onHide={this.hide_user_modal} ></UserModal>
+					<UserModal 
+						hidden={!auth.isAuthenticated()} 
+						show={this.state.display_user_modal} 
+						onHide={this.hide_user_modal} 
+						history={this.props.history} 
+						logout={this.logout} />
 
-					<Nav.Link style={NavbarLinkStyle} hidden={!auth.isAuthenticated()} onClick={() => this.props.history.push("/account")}>Account </Nav.Link>
-					<Nav.Link style={NavbarLinkStyle} hidden={!auth.isAuthenticated()} onClick={this.logout}>Logout </Nav.Link>
-
-
+					<Nav.Link style={NavbarLinkStyle} onClick={() => this.props.history.push("/stores")}>Find a Gigg </Nav.Link>
 				</Nav>
 			</Navbar>
 		)
