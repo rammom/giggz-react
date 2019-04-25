@@ -3,11 +3,14 @@ import jwt_decode from 'jwt-decode';
 
 class Auth {
 	constructor() {
-		let ts = this;
-		
+
 		// Add a request interceptor
 		axios.interceptors.request.use(function (request) {
-			request.headers.Authorization = `bearer ${localStorage.getItem('giggz-user-tkn')}`;
+
+			// hacky way to avoid adding header on external requests
+			if (!request.url.includes("http"))
+				request.headers.Authorization = `bearer ${localStorage.getItem('giggz-user-tkn')}`;
+
 			return request;
 		}, function (error) {
 			console.log('error');
@@ -18,7 +21,8 @@ class Auth {
 		axios.interceptors.response.use(function (response) {
 			return response;
 		}, function (error) {
-			ts.logout();
+			//ts.logout();
+			console.log(error);
 			return;
 		});
 	}
