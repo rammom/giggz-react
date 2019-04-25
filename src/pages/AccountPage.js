@@ -27,7 +27,7 @@ export class AccountPage extends Component {
 					history={this.props.history}
 				/>
 				<MyContainer>
-					<h1>My Account</h1>
+					<h1>Account Settings</h1>
 					<p>{JSON.stringify(this.state.user)}</p>
 				</MyContainer>
 			</div>

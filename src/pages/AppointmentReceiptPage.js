@@ -42,7 +42,8 @@ export class AppointmentReceiptPage extends Component {
 				this.setState({appointment});
 			})
 			.catch(err => {
-				this.props.history.push('/');
+				console.log(err);
+				//this.props.history.push('/');
 			});
 	}
 
