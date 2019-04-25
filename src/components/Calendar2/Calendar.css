@@ -36,7 +36,8 @@
   --text-color: #777;
   --text-color-light: #bbb;
   --border-color: #ccc;
-  --border-color-light: #eee;
+  --border-color-light: rgb(226, 226, 226);
+  --shaded-color: #e9e9e9cc;
   --bg-color: #f9f9f9;
   --neutral-color: #fff;
 }
@@ -177,13 +178,41 @@ header #logo .icon {
 .slot-sm {
 	height: 0.3em;
 }
-.not-available {
-	background-color: grey!important;
-	border: none!important;
+.shaded {
+	background-color: var(--shaded-color)!important;
+
+	transition: 0.30s ease-in;
+	cursor: unset!important;
+}
+.is-appointment {
+	background-color: rgba(41, 230, 255, 0.938)!important;
 	transition: 0.30s ease-in;
 }
+.is-appointment.first-slot {
+	border-top: 2px solid rgba(0, 195, 255, 0.938)!important;
+	border-right: 2px solid rgba(0, 195, 255, 0.938)!important;
+	border-bottom: none;
+	border-left: 10px solid rgba(0, 174, 255, 0.938)!important;
+	border-top-left-radius: 10px
+}
+.is-appointment.mid-slot {
+	border-top: none;
+	border-right: 2px solid rgba(0, 195, 255, 0.938)!important;
+	border-bottom: none;
+	border-left: 10px solid rgba(0, 174, 255, 0.938)!important;
+}
+.is-appointment.last-slot {
+	border-top: none;
+	border-right: 2px solid rgba(0, 195, 255, 0.938)!important;
+	border-bottom: 2px solid rgba(0, 195, 255, 0.938)!important;
+	border-left: 10px solid rgba(0, 174, 255, 0.938)!important;
+}
+
+.not-available {
+	
+}
 .selectable {
-	background-color: rgb(4, 184, 4)!important;
+	background-color: rgba(108, 236, 91, 0.89)!important;
 	border-bottom: none!important;
 }
 
@@ -195,6 +224,16 @@ header #logo .icon {
   	top: 0.2em;	  
 	font-weight: 700;
 	color: var(--text-color-light)
+}
+
+.calendar .time_over {
+	position: absolute;
+  	font-size: 100%;
+  	line-height: 1;
+	left: 0.2em;
+  	top: 0.2em;	  
+	font-weight: 700;
+	color: var(--text-color)
 }
 
 .border-bot {

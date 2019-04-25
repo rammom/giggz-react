@@ -5,12 +5,11 @@ class Auth {
 		// Add a response interceptor
 		axios.interceptors.response.use(function (response) {
 			// Do something with response data
-			console.log(response);
 			return response;
-		}, async function (error) {
+		}, function (error) {
 			// Do something with response error
-			console.log(error);
-			return await this.logout();
+			console.log('error');
+			return;// ts.logout();
 		});
 	}
 
@@ -30,30 +29,31 @@ class Auth {
 		await axios.post('/auth/login', body)
 			.then(res => {
 				this.authenticated = true;
-				sessionStorage.setItem('user', JSON.stringify(res.data.user));
+				sessionStorage.setItem('giggz_user', JSON.stringify(res.data.user));
 				return success ? success(res) : null;
 			})
 			.catch(err => fail ? fail(err) : null);
 	}
 
 	async logout(success, fail) {
+		if (!this.isAuthenticated()) return;
 		console.log("logging out...");
 		await axios.get('/auth/logout')
 			.then(res => {
 				this.authenticated = false;
-				sessionStorage.setItem('user', null);
-				window.location.replace('/');
+				sessionStorage.setItem('giggz_user', null);
+				//window.location.replace('/');
 				return success ? success(res) : null;
 			})
 			.catch(err => {
-				sessionStorage.setItem('user', null);
-				window.location.replace('/');
+				sessionStorage.setItem('giggz_user', null);
+				//window.location.replace('/');
 				return (fail) ? fail(err) : null
 			});
 	}
 
 	getCachedUser() {
-		let user = JSON.parse(sessionStorage.getItem('user'));
+		let user = JSON.parse(sessionStorage.getItem('giggz_user'));
 		if (!user) return {};
 		user.firstname = user.firstname.substring(0,1) + user.firstname.substring(1).toLowerCase();
 		user.lastname = user.lastname.substring(0, 1) + user.lastname.substring(1).toLowerCase();
@@ -61,9 +61,8 @@ class Auth {
 		return user;
 	}
 
-
 	isAuthenticated() {
-		return sessionStorage.getItem('user') !== null && sessionStorage.getItem('user') !== "null"; 
+		return sessionStorage.getItem('giggz_user') !== null && sessionStorage.getItem('giggz_user') !== "null"; 
 	}
 }
 
