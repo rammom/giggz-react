@@ -1,58 +1,48 @@
 import React, { Component } from 'react';
+import WeekView from './WeekView';
+import dateFns from 'date-fns';
 
-import CalMenuBar from './CalMenuBar';
-import CalViewPort from './CalViewPort';
-import moment from 'moment';
-moment().format();
-
-export class Calendar extends Component {
+class Calendar extends Component {
 
 	state = {
-		startDate: moment(new Date()).startOf('day'),
-		date: moment(new Date()).startOf('day')
+		currentMonth: new Date(),
 	}
 
-	moveForward = () => {
-		let date = this.state.date;
-		date.add(1, 'weeks');
-		this.setState({date});
+	movePrevWeek = () => {
+		this.setState({ currentMonth: dateFns.subWeeks(this.state.currentMonth, 1) });
 	}
-	moveBackward = () => {
-		let date = this.state.date;
-		date.subtract(1, 'weeks');
-		if (date < this.state.startDate) return;
-		else this.setState({date});
+	moveNextWeek = () => {
+		this.setState({ currentMonth: dateFns.addWeeks(this.state.currentMonth, 1) });
+	}
+
+	genView = () => {
+		if (this.props.view === "day"){
+			return null;
+		}
+		else if (this.props.view === "week"){
+			return (<WeekView
+				employee_view={this.props.employee_view}
+				editable={this.props.editable}
+				currentMonth={this.state.currentMonth}
+				movePrevWeek={this.movePrevWeek}
+				moveNextWeek={this.moveNextWeek}
+				interval={15}
+				availability={this.props.availability}
+				appointments={this.props.appointments}
+				serviceLength={this.props.serviceLength}
+				setAppointment={this.props.setAppointment}
+				showAppointment={this.props.showAppointment}
+			/>);
+		}
 	}
 
 	render() {
 		return (
-			<div>
-				<CalMenuBar 
-					date={this.state.date} 
-					moveForward={this.moveForward}
-					moveBackward={this.moveBackward}
-				/>
-				<CalViewPort 
-					setAppointment={this.props.setAppointment}
-					date={this.state.date}
-					style={CalendarStyles}
-					availability={this.props.availability} 
-					appointments={this.props.appointments} 
-					user_appointment={this.props.user_appointment}
-					possibleSelections={this.props.possibleSelections}
-					serviceLength={this.props.serviceLength}
-					clear={this.props.clear}
-					resetClear={this.props.resetClear}
-					cancelAppointment={this.props.cancelAppointment}
-					requestClear={this.props.requestClear}
-				/>
+			<div className="calendar-wrapper">
+				{this.genView()}
 			</div>
 		)
-	}
-}
-
-const CalendarStyles = {
-
+  	}
 }
 
 export default Calendar;

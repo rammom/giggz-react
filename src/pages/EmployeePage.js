@@ -4,8 +4,7 @@ import axios from 'axios';
 import MyNavbar from '../components/MyNavbar';
 import MyContainer from '../components/MyContainer';
 import { Row, Col } from 'react-bootstrap';
-//import Calendar from '../components/Calendar/Calendar';
-import Calendar from '../components/Calendar2/Calendar';
+import Calendar from '../components/Calendar/Calendar';
 import ServiceSelection from '../components/ServiceSelection';
 
 export class EmployeePage extends Component {
@@ -143,18 +142,8 @@ export class EmployeePage extends Component {
 						</Col>
 						<Col>
 							<h6 style={{textAlign: "center"}}>Select your prefered time slot below.</h6>
-							{/* <Calendar 
-								setAppointment={this.setAppointment}
-								availability={this.state.employee.hours} 
-								appointments={this.state.employee.appointments}
-								user_appointment={this.state.appointment}
-								serviceLength={parseInt(this.state.appointment.service.length)}
-								clear={this.state.refreshCalendar}
-								resetClear={this.resetClear}
-								cancelAppointment={this.cancelAppointment}
-								requestClear={this.clearCal}
-							/> */}
 							<Calendar 
+								editable
 								availability={this.state.employee.hours}
 								appointments={this.state.employee.appointments.map(appt => {
 									return {
@@ -164,6 +153,7 @@ export class EmployeePage extends Component {
 								})}
 								serviceLength={parseInt(this.state.appointment.service.length)}
 								setAppointment={this.setAppointment}
+								view={"week"}
 							/>
 						</Col>
 					</Row>

@@ -55,9 +55,36 @@ export class WeekView extends Component {
 				appointmentBlocks[dateFns.format(appt.datetime, date_format)] = block_slots;
 			})
 			this.setState({ appointmentBlocks });
-			console.log(appointmentBlocks);
 
 		}
+	}
+
+	getParentDate(datetime) {
+		let date_format = "MM/DD/YYYY H:mm:ss";
+		let cloneTime = new Date(datetime);
+		let apptBlock = this.state.appointmentBlocks[dateFns.format(cloneTime, date_format)]
+		if (apptBlock) {
+			return apptBlock[0]
+		} 
+		while (!this.state.appointmentBlocks[dateFns.format(cloneTime, date_format)]) {
+			if (dateFns.isAfter(this.state.startTime, cloneTime)) return null;
+			cloneTime = dateFns.subMinutes(cloneTime, this.props.interval);
+		}
+		apptBlock = this.state.appointmentBlocks[dateFns.format(cloneTime, date_format)];
+		if (apptBlock) return apptBlock[0];
+		return null;
+	}
+
+	getAppointment(datetime) {
+		let formattedDate = this.getParentDate(datetime);
+		let date_format = "MM/DD/YYYY H:mm:ss";
+		for (let i = 0; i < this.props.appointments.length; ++i) {
+			if (dateFns.format(this.props.appointments[i].datetime, date_format) === formattedDate){
+				return this.props.appointments[i];
+			}
+		}
+		// not found
+
 	}
 
 	isPast(datetime) {
@@ -70,6 +97,15 @@ export class WeekView extends Component {
 		let date_format = "MM/DD/YYYY H:mm:ss";
 		if (this.state.appointmentBlocks[dateFns.format(datetime, date_format)]) return true;
 		return false;
+	}
+	isSecondSlotInAppointment(datetime) {
+		if (this.isFirstSlotInAppointment(datetime)) return false;
+		let cloneTime = dateFns.subMinutes(datetime, this.props.interval);
+		let date_format = "MM/DD/YYYY H:mm:ss";
+		let apptBlocks = this.state.appointmentBlocks[dateFns.format(cloneTime, date_format)];
+		if (!apptBlocks) return false;
+		if (!(apptBlocks[1] === dateFns.format(datetime, date_format))) return false;
+		return true;
 	}
 
 	// MAKE SURE GIVEN DATETIME IS IN AN APPOINTMENT
@@ -96,6 +132,9 @@ export class WeekView extends Component {
 	}
 
 	isAvailable(datetime){
+		let now = new Date();
+		if (datetime - now < 0) return false;
+		if (dateFns.isPast(datetime)) return false;
 		let endTime = this.state.endTime;
 		endTime = dateFns.setDayOfYear(endTime, dateFns.getDayOfYear(datetime));
 		if (dateFns.isEqual(datetime, endTime) || dateFns.isAfter(datetime, endTime)) return false;
@@ -265,27 +304,53 @@ export class WeekView extends Component {
 				// Slots of the hour (in ~15 minute intervals (this.props.interval minutes))
 				for (let i = 0; i < slot_count; ++i){
 					const cloneTime = curTime;
-					let mouse_over = this.isMouseOver(dateFns.parse(cloneTime));
-					let time = null;
-					if (day === 0 && i === 0) {
-						time = <span className="mycol mycol-left time noselect">{dateFns.format(curTime, "h a")}</span>;
+					const isAvailable = this.isAvailable(cloneTime);
+					const isPast = this.isPast(cloneTime);
+					let mouse_over = (isAvailable) ? this.isMouseOver(cloneTime) : null;
+					let isFirstSlot = null;
+					let isSecondSlot = null;
+					let isLastSlot = null;
+					if (!isAvailable && !isPast){
+						isFirstSlot = this.isFirstSlotInAppointment(cloneTime);
+						isSecondSlot = this.isSecondSlotInAppointment(cloneTime);
+						isLastSlot = this.isLastSlotInAppointment(cloneTime);
 					}
-					if (mouse_over && !this.isPast(cloneTime) && this.isAvailable(cloneTime)) {
-						time = <span className="mycol mycol-left time_over noselect">{dateFns.format(curTime, "h:mm a")}</span>;
+					//const isSecondSlot = this.isSecondSlotInAppointment(dateFns.parse(cloneTime));
+					let appt = null;
+					if (this.props.employee_view && !isPast && !isAvailable){
+						appt = this.getAppointment(cloneTime);
 					}
 
+					// add text ?
+					let text = null;
+					if (day === 0 && i === 0) {
+						text = <span className="mycol mycol-left time noselect">{dateFns.format(curTime, "h a")}</span>;
+					}
+					if (mouse_over && !this.isPast(cloneTime) && isAvailable) {
+						text = <span className="mycol mycol-left time_over noselect">{dateFns.format(curTime, "h:mm a")}</span>;
+					}
+					if (this.props.employee_view && !isAvailable && !isPast && isSecondSlot) {
+						// or appt.customer.firstname
+						if (appt && appt.customer) text = <span className="mycol mycol-left name_over noselect"><span className="sm">for</span> {appt.customer.firstname}</span>;
+					}
+					if (this.props.employee_view && !isAvailable && !isPast && isFirstSlot) {
+						// or appt.customer.firstname
+						if (appt && appt.customer) text = <span className="mycol mycol-left name_over noselect">{appt.service.name}</span>;
+					}
+
+					// format styles
 					let classes = "myrow slot ";
 					if (this.props.interval === 5) classes += "slot-sm ";
 					else classes += "slot-md ";
 					if (i === slot_count - 1) classes += "border-bot ";
 					else classes += "border-bot-light ";
-					if (this.isPast(dateFns.parse(cloneTime))) classes += "shaded ";
+					if (isPast) classes += "shaded ";
 					else {
-						if (!this.isAvailable(dateFns.parse(cloneTime))) {
+						if (!isAvailable) {
 							if (this.props.employee_view) {
 								classes += "is-appointment ";
-								if (this.isFirstSlotInAppointment(dateFns.parse(cloneTime))) classes += "first-slot ";
-								if (this.isLastSlotInAppointment(dateFns.parse(cloneTime))) classes += "last-slot ";
+								if (isFirstSlot) classes += "first-slot ";
+								if (isLastSlot) classes += "last-slot ";
 							}
 							else {
 								classes += "shaded ";
@@ -295,7 +360,21 @@ export class WeekView extends Component {
 							classes += "available ";
 						}
 					}
-					if (this.isInMouseOverBlock(dateFns.parse(cloneTime))) classes += "selectable ";
+					if (this.isInMouseOverBlock(cloneTime)) classes += "selectable ";
+
+					// set click function
+					let click = () => {
+						if (!this.props.employee_view) {
+							this.setAppointment();
+						}
+						else {
+							if (!isAvailable && !isPast && this.props.showAppointment) {
+								this.props.showAppointment(appt);
+							}
+						}
+					};
+					
+
 					slots.push(
 						<div 
 							className={classes} 
@@ -303,9 +382,9 @@ export class WeekView extends Component {
 							// eslint-disable-next-line
 							onMouseEnter={() => { return this.mouseEnter(cloneTime)}}
 							onMouseLeave={this.mouseLeave}
-							onClick={this.setAppointment}
+							onClick={click}
 						>
-							{time}
+							{text}
 						</div>
 					);
 

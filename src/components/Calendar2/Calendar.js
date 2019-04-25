@@ -15,19 +15,30 @@ class Calendar extends Component {
 		this.setState({ currentMonth: dateFns.addWeeks(this.state.currentMonth, 1) });
 	}
 
+	genView = () => {
+		if (this.props.view === "day"){
+			return null;
+		}
+		else if (this.props.view === "week"){
+			return (<WeekView
+				employee_view={this.props.employee_view}
+				editable={this.props.editable}
+				currentMonth={this.state.currentMonth}
+				movePrevWeek={this.movePrevWeek}
+				moveNextWeek={this.moveNextWeek}
+				interval={15}
+				availability={this.props.availability}
+				appointments={this.props.appointments}
+				serviceLength={this.props.serviceLength}
+				setAppointment={this.props.setAppointment}
+			/>);
+		}
+	}
+
 	render() {
 		return (
 			<div className="calendar-wrapper">
-				<WeekView 
-					currentMonth={this.state.currentMonth}
-					movePrevWeek={this.movePrevWeek}
-					moveNextWeek={this.moveNextWeek}
-					interval={15}
-					availability={this.props.availability}
-					appointments={this.props.appointments}
-					serviceLength={this.props.serviceLength}
-					setAppointment={this.props.setAppointment}
-				/>
+				{this.genView()}
 			</div>
 		)
   	}

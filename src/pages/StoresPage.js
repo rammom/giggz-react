@@ -19,7 +19,7 @@ export class StorePage extends Component {
 				this.setState({stores: res.data.stores})
 			})
 			.catch(err => {
-				console.log(err.response)
+				console.log(err)
 			})
 	}
 

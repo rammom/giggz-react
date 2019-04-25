@@ -99,6 +99,7 @@ export class MyNavbar extends Component {
 
 	logout = async () => {
 		await auth.logout();
+		this.forceUpdate();
 	}
 
 	show_login_modal = () => {
