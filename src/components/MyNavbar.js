@@ -185,6 +185,7 @@ export class MyNavbar extends Component {
 					</Nav.Item>
 					<UserModal hidden={!auth.isAuthenticated()} show={this.state.display_user_modal} onHide={this.hide_user_modal} ></UserModal>
 
+					<Nav.Link style={NavbarLinkStyle} hidden={!auth.isAuthenticated()} onClick={() => this.props.history.push("/account")}>Account </Nav.Link>
 					<Nav.Link style={NavbarLinkStyle} hidden={!auth.isAuthenticated()} onClick={this.logout}>Logout </Nav.Link>
 
 
@@ -205,6 +206,7 @@ const NavbarBrandStyle = {
 
 const NavbarLinkStyle = {
 	color: nav_text_color,
+	paddingRight: "1em"
 }
 
 const UsernameStyles = {
