@@ -1,0 +1,9 @@
+.red {
+	color: var(--giggz-color-red);
+}
+.blue {
+	color: var(--giggz-color-blue);
+}
+.transparent {
+	color: var(--giggz-color-red);
+}

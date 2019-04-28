@@ -1,0 +1,16 @@
+.red {
+	color: var(--giggz-color-red);
+	cursor: pointer;
+}
+.blue {
+	color: var(--giggz-color-blue);
+	cursor: pointer;
+}
+.transparent {
+	color: var(--giggz-color-red);
+	cursor: pointer;
+}
+
+.footer {
+	margin: auto;
+}

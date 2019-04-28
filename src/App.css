@@ -1,13 +1,22 @@
+:root {
+	--giggz-color-transparent: #00000000;
+	--giggz-color-white: rgb(238, 238, 238);
+	--giggz-color-red: #dd0000;
+	--giggz-color-blue: rgb(14, 14, 180);
+	--giggz-color-offwhite: #f8f8ff;
+}
+
+
 body {
-	background-color: #f8f8ff;
+	background-color: var(--giggz-color-offwhite);
 	font-family: 'Poppins', sans-serif;
 }
 
 .bgColRed {
-	background-color: "#dd0000!important"
+	background-color: var(--giggz-color-red)!important;
 }
 
 .redLink {
 	cursor: pointer;
-	color: #dd0000;
+	color: var(--giggz-color-red);
 }

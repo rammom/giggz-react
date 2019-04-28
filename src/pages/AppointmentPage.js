@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyNavbar from "../components/MyNavbar";
+import AuthController from '../components/AuthController';
 import MyContainer from "../components/MyContainer";
 import MyButton from "../components/MyButton";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -38,9 +38,11 @@ export class AppointmentPage extends Component {
 	render() {
 		return (
 			<div>
-				<MyNavbar
-					color="#dd0000"
+				<AuthController
+					ShowNavbar
 					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
 				/>
 				<MyContainer>
 					<Row style={PageOneStyles}>

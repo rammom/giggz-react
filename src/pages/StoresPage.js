@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import MyNavbar from '../components/MyNavbar';
+import AuthController from '../components/AuthController';
 import { Card, CardDeck, ListGroup, ListGroupItem } from 'react-bootstrap';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
@@ -97,15 +97,13 @@ export class StorePage extends Component {
 	render() {
 		return (
 			<div>
-				
-				<MyNavbar color="#dd0000" absolute={false} history={this.props.history}/>
+				<AuthController
+					ShowNavbar
+					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
+				/>
 				<MyContainer>
-					{/* <Row>
-						<Col sm={2}>
-							<MyButton text="Go Back" size="sm" onClick={() => {this.props.history.goBack()}}/>
-						</Col>
-					</Row>
-					<br/> */}
 					<h1>Your next Gigg is just a couple more clicks away.</h1>
 					<br />
 					{/* <div>

@@ -1,30 +1,26 @@
-import React from 'react';
-
+import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
-
 import LoginForm from '../../components/LoginForm';
+import './Modal.css';
 
-function LoginModal(props) {
-	return (
-		<Modal show={props.show} onHide={props.onHide} centered>
-			<Modal.Header closeButton>
-				<Modal.Title>Login</Modal.Title>
-			</Modal.Header>
+export class LoginModal extends Component {
+	render() {
+		return (
+			<Modal show={this.props.show} onHide={this.props.onHide} centered>
+				<Modal.Header closeButton>
+					<Modal.Title>Login</Modal.Title>
+				</Modal.Header>
 
-			<Modal.Body>
-				<LoginForm login={props.login} error={props.error} />
-			</Modal.Body>
+				<Modal.Body>
+					<LoginForm login={this.props.login} error={this.props.error} Variant={this.props.Variant}/>
+				</Modal.Body>
 
-			<Modal.Footer style={FooterStyle}>
-				Need an account? &nbsp; <span className="redLink" onClick={props.register}>Sign up </span>
-			</Modal.Footer>
-		</Modal>
-	)
+				<Modal.Footer className="footer">
+					Need an account? &nbsp; <span className={this.props.Variant} onClick={this.props.register}>Sign up </span>
+				</Modal.Footer>
+			</Modal>
+		)
+	}
 }
-
-const FooterStyle = {
-	margin: "auto"
-}
-
 
 export default LoginModal;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyNavbar from "../components/MyNavbar";
+import AuthController from "../components/AuthController";
 import MyContainer from "../components/MyContainer";
 import axios from 'axios';
 
@@ -22,9 +22,11 @@ export class AccountPage extends Component {
 	render() {
 		return (
 			<div>
-				<MyNavbar
-					color="#dd0000"
+				<AuthController
+					ShowNavbar
 					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
 				/>
 				<MyContainer>
 					<h1>Account Settings</h1>
