@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import MyNavbar from '../components/MyNavbar';
+import AuthController from '../components/AuthController';
 import MyContainer from '../components/MyContainer';
 import { Row, Col } from 'react-bootstrap';
 import Calendar from '../components/Calendar/Calendar';
@@ -27,7 +27,6 @@ export class EmployeePage extends Component {
 			}
 		},
 		refreshCalendar: false,
-		display_prompt_login_modal: false,
 	}
 
 	async componentWillMount() {
@@ -92,22 +91,15 @@ export class EmployeePage extends Component {
 		this.setState({refreshCalendar});
 	}
 
-	show_prompt_login_modal = () => {
-		this.setState({display_prompt_login_modal: true});
-	}
-	confirm_prompt_login_display = () => {
-		this.setState({display_prompt_login_modal: false});
-	}
-
 	render() {
 		return (
 			<div>
-				<MyNavbar 
-					color="#dd0000" 
-					history={this.props.history} 
-					show_prompt_login_modal={this.state.display_prompt_login_modal} 
-					confirm_prompt_login_display={this.confirm_prompt_login_display}
-				/> 
+				<AuthController
+					ShowNavbar
+					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
+				/>
 				<MyContainer>
 					{/* <Row>
 						<Col sm={2}>

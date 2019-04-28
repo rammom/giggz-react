@@ -13,8 +13,8 @@ class Auth {
 
 			return request;
 		}, function (error) {
-			console.log('error');
-			return;
+			console.log(error);
+			return Promise.reject(error);
 		});
 
 		// Add a response interceptor
@@ -23,7 +23,7 @@ class Auth {
 		}, function (error) {
 			//ts.logout();
 			console.log(error);
-			return;
+			return Promise.reject(error);
 		});
 	}
 

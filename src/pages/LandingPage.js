@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { Row, Jumbotron } from 'react-bootstrap';
 
 import MyButton from '../components/MyButton';
-import MyNavbar from '../components/MyNavbar';
+// import MyNavbar from '../components/MyNavbar';
+import AuthController from '../components/AuthController';
 
 export class LandingPage extends Component {
+
 	render() {
 		return (
 			<div>
-				<MyNavbar absolute={true} history={this.props.history}/>
+				{/* <MyNavbar absolute={true} history={this.props.history}/> */}
+				<AuthController
+					ShowNavbar
+					history={this.props.history}
+					Variant="transparent"
+					BrandName="Giggz"
+				/>
 				<div style={OverlayStyle}></div>
 
 				<Row style={PageOneStyles}>

@@ -1,0 +1,20 @@
+.red-button {
+	background-color: var(--giggz-color-red);
+	border-color: var(--giggz-color-red);
+	color: var(--giggz-color-white);
+}
+.blue-button{
+	background-color: var(--giggz-color-blue)!important;
+	border-color: var(--giggz-color-blue);
+	color: var(--giggz-color-white);
+}
+.transparent-button{
+	background-color: var(--giggz-color-red);
+	border-color: var(--giggz-color-red);
+	color: var(--giggz-color-white);
+}
+.ud-button {
+	background-color: var(--giggz-color-red)!important;
+	border-color: var(--giggz-color-red)!important;
+	color: var(--giggz-color-white)!important;
+}

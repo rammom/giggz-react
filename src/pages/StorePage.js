@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardDeck, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap';
 
-import MyNavbar from '../components/MyNavbar';
+import AuthController from '../components/AuthController';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
 import StoreInfoModal from '../pages/modals/StoreInfoModal';
@@ -98,7 +98,12 @@ export class StorePage extends Component {
 	render() {
 		return (
 			<div>
-				<MyNavbar color="#dd0000" history={this.props.history}/>
+				<AuthController
+					ShowNavbar
+					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
+				/>
 				<MyContainer>
 					{/* <Row>
 						<Col sm={2}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyNavbar from "../components/MyNavbar";
+import AuthController from '../components/AuthController';
 import MyContainer from "../components/MyContainer";
 import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
@@ -55,9 +55,11 @@ export class AppointmentsPage extends Component {
 	render() {
 		return (
 			<div>
-				<MyNavbar
-					color="#dd0000"
+				<AuthController
+					ShowNavbar
 					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
 				/>
 				<MyContainer>
 					<h1>My Giggz</h1>

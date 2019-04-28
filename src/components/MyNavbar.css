@@ -1,0 +1,43 @@
+
+.masterNavbar {
+	width: 100%;
+	padding: 1em 2em 1em 2em;
+	font-size: 1em;
+	z-index: 5;
+}
+.masterNavbar.red {
+	background-color: var(--giggz-color-red)!important;
+	height: 5em;
+}
+.masterNavbar.transparent {
+	background-color: var(--giggz-color-transparent)!important;
+	position: absolute;
+	height: 5em;
+}
+.masterNavbar.blue {
+	background-color: var(--giggz-color-blue)!important;
+	height: 3.5em;
+}
+
+.navLinkContainer {
+	float: right;
+}
+
+.navBrand {
+	font-size: 1.4em;
+	cursor: pointer;
+	color: var(--white)!important;
+}
+
+.navLink {
+	padding-right: 1em;
+	transition: all 300ms ease-in-out;
+	color: var(--white)!important;
+}
+.navLink:hover {
+	transform: scale(1.03);
+}
+
+.userIcon {
+	font-size: 1.5em;
+}

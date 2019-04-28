@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
-
 import MyButton from '../components/MyButton';
 import ErrorFlash from '../components/ErrorFlash';
 import SuccessFlash from '../components/SuccessFlash';
+import './Form.css';
 
 export class RegisterForm extends Component {
 
@@ -70,7 +70,7 @@ export class RegisterForm extends Component {
 						<Form.Control type="password" name="password_verify" value={this.state.user.password_verify} placeholder="Confirm Password" onChange={this.onChange} required/>
 					</Form.Group>
 
-					<MyButton variant="primary" type="submit" text="Sign Up" />
+					<MyButton Variant={this.props.Variant} type="submit" text="Sign Up" />
 
 				</Form>
 			</div>
