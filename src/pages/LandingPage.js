@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Jumbotron } from 'react-bootstrap';
+import { Row, Col, Jumbotron } from 'react-bootstrap';
 
 import MyButton from '../components/MyButton';
 import MyNavbar from '../components/MyNavbar';
+
 
 export class LandingPage extends Component {
 	render() {
@@ -12,17 +13,22 @@ export class LandingPage extends Component {
 				<div style={OverlayStyle}></div>
 
 				<Row style={PageOneStyles}>
-					<Jumbotron style={JumbotronStyles}>
-						<h1>Find your Gigg.</h1>
-						<p>
-							Giggz is an easy to use, multiplatform application that finds the best services near you. <br/> 
-							Need a haircut? No problem, we've got a Gigg for you! 
-						</p>
-						<p>
-							<MyButton variant="dark" text="Start Looking" onClick={() => {this.props.history.push('/stores')}}/>
-						</p>
-					</Jumbotron>
+					<Col>
+						{ <Jumbotron style={JumbotronStyles}>
+							<h1>Find your Gigg.</h1>
+							<p>
+								Giggz is an easy to use, multiplatform application that finds the best services near you. <br/> 
+								Need a haircut? No problem, we've got a Gigg for you! 
+							</p>
+							
+							<p>
+								<MyButton variant="dark" text="Start Looking" onClick={() => {this.props.history.push('/stores')}}/>
+							</p>
+						</Jumbotron>}
+						
+					</Col>
 				</Row>
+
 			</div>
 		)
 	}
@@ -40,6 +46,9 @@ const OverlayStyle = {
 }
 
 const PageOneStyles = {
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
 	height: "100vh",
 	width: "100vw",
 	margin: "0",
