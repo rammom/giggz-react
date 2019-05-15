@@ -235,17 +235,6 @@ header #logo .icon {
 	font-weight: 700;
 	color: var(--text-color)
 }
-.calendar .name_over {
-  	font-size: 100%;
-  	line-height: 1;
-	padding-left: 0.2em;
-  	padding-top: 0.2em;	  
-	font-weight: 700;
-	color: var(--text-color)
-}
-.calendar .name_over > .sm {
-  	font-size: 70%;
-}
 
 .border-bot {
   	border-bottom: 1px solid var(--border-color);

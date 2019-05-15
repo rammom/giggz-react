@@ -5,6 +5,10 @@ import LandingPage from './pages/LandingPage';
 import StoresPage from './pages/StoresPage';
 import StorePage from './pages/StorePage';
 import EmployeePage from './pages/EmployeePage';
+import AppointmentReceiptPage from './pages/AppointmentReceiptPage';
+import AccountPage from './pages/AccountPage';
+import AppointmentsPage from './pages/AppointmentsPage';
+import AppointmentPage from './pages/AppointmentPage';
 
 export class Routes extends Component {
 	render() {
@@ -15,6 +19,10 @@ export class Routes extends Component {
 					<Route exact path="/stores" component={StoresPage} />
 					<Route exact path="/store/:slug/:employeeId" component={EmployeePage} />
 					<Route exact path="/store/:slug" component={StorePage} />
+					<Route exact path="/receipt/:apptId" component={AppointmentReceiptPage} />
+					<Route exact path="/account" component={AccountPage} />
+					<Route exact path="/giggz" component={AppointmentsPage} />
+					<Route exact path="/giggz/view/:giggId" component={AppointmentPage} />
 
 					<Route exact path="*">
 						<Redirect to="/" />

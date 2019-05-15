@@ -1,6 +1,31 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 class Auth {
+	constructor() {
+
+		// Add a request interceptor
+		axios.interceptors.request.use(function (request) {
+
+			// hacky way to avoid adding header on external requests
+			if (!request.url.includes("http"))
+				request.headers.Authorization = `bearer ${localStorage.getItem('giggz-user-tkn')}`;
+
+			return request;
+		}, function (error) {
+			console.log('error');
+			return;
+		});
+
+		// Add a response interceptor
+		axios.interceptors.response.use(function (response) {
+			return response;
+		}, function (error) {
+			//ts.logout();
+			console.log(error);
+			return;
+		});
+	}
 
 	async register(body, success, fail) {
 		console.log("registering...");
@@ -15,40 +40,35 @@ class Auth {
 
 	async login(body, success, fail) {
 		console.log("logging in...");
+		console.log(body);
 		await axios.post('/auth/login', body)
 			.then(res => {
-				this.authenticated = true;
-				sessionStorage.setItem('user', JSON.stringify(res.data.user));
-				window.location.replace('/');
+				localStorage.setItem('giggz-user-tkn', res.data.token);
 				return success ? success(res) : null;
 			})
 			.catch(err => fail ? fail(err) : null);
 	}
 
-	async logout(success, fail) {
+	logout() {
+		// so far only client side logout is setup for JTW
+		// may want to implement a redis stored backlist per user in the future for server side logouts.
 		console.log("logging out...");
-		await axios.get('/auth/logout')
-			.then(res => {
-				this.authenticated = false;
-				sessionStorage.setItem('user', null);
-				window.location.replace('/');
-				return success ? success(res) : null;
-			})
-			.catch(err => fail ? fail(err) : null);
+		localStorage.setItem('giggz-user-tkn', null);
+		window.location.href = "/";
 	}
 
 	getCachedUser() {
-		let user = JSON.parse(sessionStorage.getItem('user'));
-		if (!user) return {};
+		if (!this.isAuthenticated()) return {};
+		let token = localStorage.getItem('giggz-user-tkn');
+		let user = jwt_decode(token).user;
 		user.firstname = user.firstname.substring(0,1) + user.firstname.substring(1).toLowerCase();
 		user.lastname = user.lastname.substring(0, 1) + user.lastname.substring(1).toLowerCase();
 		user.email = user.email.toLowerCase();
 		return user;
 	}
 
-
 	isAuthenticated() {
-		return sessionStorage.getItem('user') !== null && sessionStorage.getItem('user') !== "null"; 
+		return localStorage.getItem('giggz-user-tkn') !== null && localStorage.getItem('giggz-user-tkn') !== "null"; 
 	}
 }
 

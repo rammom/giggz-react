@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 
 import MyNavbar from '../components/MyNavbar';
-import { Card, CardDeck, ListGroup, ListGroupItem, ProgressBar, Row, Col } from 'react-bootstrap';
+import { Card, CardDeck, ListGroup, ListGroupItem } from 'react-bootstrap';
 import MyButton from '../components/MyButton';
 import MyContainer from '../components/MyContainer';
 //import LocationSearchInput from '../components/LocationSearchInput';
 
 
 
-
-let click_distance = 5;
-let progress = `${(100 / 5) * (6 - click_distance)}`
 
 export class StorePage extends Component {
 
@@ -21,8 +18,19 @@ export class StorePage extends Component {
 
 
 
-	processStores = (stores) => {
-		this.setState({stores});
+
+// 	processStores = (stores) => {
+// 		this.setState({stores});
+//   }
+	async componentWillMount() {
+		await axios.get('api/store/bunch')
+			.then(res => {
+				console.log(res);
+				this.setState({stores: res.data.stores})
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	gen_card_deck = (cards) => {
@@ -91,15 +99,12 @@ export class StorePage extends Component {
 				
 				<MyNavbar color="#dd0000" absolute={false} history={this.props.history}/>
 				<MyContainer>
-					<Row>
+					{/* <Row>
 						<Col sm={2}>
 							<MyButton text="Go Back" size="sm" onClick={() => {this.props.history.goBack()}}/>
 						</Col>
-						<Col style={{margin: "auto"}}>
-							<ProgressBar animated variant="danger" now={progress} label={`${click_distance} clicks away`} />
-						</Col>
 					</Row>
-					<br/>
+					<br/> */}
 					<h1>Your next Gigg is just a couple more clicks away.</h1>
 					<br />
 					{/* <div>

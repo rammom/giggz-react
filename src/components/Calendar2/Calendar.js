@@ -31,7 +31,6 @@ class Calendar extends Component {
 				appointments={this.props.appointments}
 				serviceLength={this.props.serviceLength}
 				setAppointment={this.props.setAppointment}
-				showAppointment={this.props.showAppointment}
 			/>);
 		}
 	}
