@@ -1,10 +1,11 @@
-
 .list-item  {
 	cursor: pointer;
 }
-
-.list-item:last-of-type  {
-	color: #dd0000;
+.list-item.red  {
+	color: var(--giggz-color-red);
+}
+.list-item.blue {
+	color: var(--giggz-color-blue);
 }
 
 .body-styles {

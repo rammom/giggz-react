@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Jumbotron } from 'react-bootstrap';
 import MyContainer from '../components/MyContainer';
-import MyNavbar from '../components/MyNavbar';
+import AuthController from '../components/AuthController';
 import axios from 'axios';
 import AppointmentReceipt from "../components/AppointmentReceipt";
 
@@ -50,9 +50,11 @@ export class AppointmentReceiptPage extends Component {
 	render() {
 		return (
 			<div>
-				<MyNavbar
-					color="#dd0000"
+				<AuthController
+					ShowNavbar
 					history={this.props.history}
+					Variant="red"
+					BrandName="Giggz"
 				/>
 				<MyContainer>
 					{/* <Row>
