@@ -82,6 +82,10 @@ export class EmployeePage extends Component {
 			})
 	}
 
+	show_prompt_login_modal = () => {
+		alert('You must be logged in!');
+	}
+
 	clearCal = () => {
 		let refreshCalendar = true;
 		this.setState({ refreshCalendar });
