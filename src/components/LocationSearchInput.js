@@ -33,7 +33,7 @@ export class LocationSearchInput extends React.Component {
             let range = this.state.range;
 
             if(lat && lng && range){
-                axios.get('api/store/getByLocation',{
+				axios.get(`${process.env.REACT_APP_GIGGZ_API}api/store/getByLocation`,{
                     params: {
                         lat,
                         lng,
