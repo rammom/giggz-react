@@ -34,7 +34,7 @@ export class AppointmentReceiptPage extends Component {
 	}
 
 	componentDidMount() {
-		axios.get(`${process.env.GIGGZ_API}/api/appointment/${this.props.match.params.apptId}`)
+		axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/appointment/${this.props.match.params.apptId}`)
 			.then(res => {
 				let appointment = res.data.appointment;
 				appointment.datetime = moment(appointment.datetime)

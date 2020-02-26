@@ -12,7 +12,7 @@ export class AppointmentsPage extends Component {
 	}
 
 	componentDidMount() {
-		axios.get(`${process.env.GIGGZ_API}/api/appointment/getUserAppointments`)
+		axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/appointment/getUserAppointments`)
 			.then(res => {
 				console.log(res);
 				let appts = res.data.appointments;

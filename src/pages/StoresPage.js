@@ -24,7 +24,7 @@ export class StorePage extends Component {
 // 		this.setState({stores});
 //   }
 	async componentWillMount() {
-		await axios.get(`${process.env.GIGGZ_API}/api/store/bunch`)
+		await axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/store/bunch`)
 			.then(res => {
 				console.log(res);
 				this.setState({stores: res.data.stores})

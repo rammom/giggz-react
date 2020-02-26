@@ -30,7 +30,7 @@ export class EmployeePage extends Component {
 	}
 
 	async componentWillMount() {
-		await axios.get(`${process.env.GIGGZ_API}/api/store/${this.props.match.params.slug}`)
+		await axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/store/${this.props.match.params.slug}`)
 			.then(res => {
 				this.setState({ store: res.data.store });
 				for (let i = 0; i < res.data.store.employees.length; ++i){
@@ -73,7 +73,7 @@ export class EmployeePage extends Component {
 			serviceid: this.state.appointment.service._id,
 			date: new Date(this.state.appointment.date),
 		}
-		await axios.post(`${process.env.GIGGZ_API}/api/employee/appointment`, body)
+		await axios.post(`${process.env.REACT_APP_GIGGZ_API}/api/employee/appointment`, body)
 			.then(res => {
 				this.props.history.push(`/receipt/${res.data.appointment._id}`)
 			})

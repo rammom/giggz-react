@@ -15,7 +15,7 @@ export class AppointmentPage extends Component {
 	}
 
 	componentDidMount() {
-		axios.get(`${process.env.GIGGZ_API}/api/appointment/${this.props.match.params.giggId}`)
+		axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/appointment/${this.props.match.params.giggId}`)
 			.then(res => {
 				let appointment = res.data.appointment;
 				appointment.datetime = moment(appointment.datetime)
@@ -30,7 +30,7 @@ export class AppointmentPage extends Component {
 	}
 
 	cancelAppointment = () => {
-		axios.delete(`${process.env.GIGGZ_API}/api/appointment/${this.state.appointment._id}`)
+		axios.delete(`${process.env.REACT_APP_GIGGZ_API}/api/appointment/${this.state.appointment._id}`)
 			.then(res => console.log(res))
 			.catch(err => console.log(err));
 	}
