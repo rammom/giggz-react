@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://giggz-service.mrammo.ca",
   "eslintConfig": {
     "extends": "react-app"
   },
