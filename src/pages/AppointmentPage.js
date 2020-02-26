@@ -12,7 +12,7 @@ export class AppointmentPage extends Component {
 
 	state = {
 		appointment: {}
-	}
+	} 
 
 	componentDidMount() {
 		axios.get(`${process.env.REACT_APP_GIGGZ_API}/api/appointment/${this.props.match.params.giggId}`)
