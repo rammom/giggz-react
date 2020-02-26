@@ -10,7 +10,7 @@ export class AccountPage extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/user/getDetailedUser')
+		axios.get(`${process.env.GIGGZ_API}/api/user/getDetailedUser`)
 			.then(res => {
 				if (!res.data.user) this.props.history.push("/");
 				console.log(res.data.user);
