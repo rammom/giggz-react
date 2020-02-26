@@ -8,7 +8,7 @@ class Auth {
 		axios.interceptors.request.use(function (request) {
 
 			// hacky way to avoid adding header on external requests
-			if (!request.url.includes("http"))
+			//if (!request.url.includes("http"))
 				request.headers.Authorization = `bearer ${localStorage.getItem('giggz-user-tkn')}`;
 
 			return request;
